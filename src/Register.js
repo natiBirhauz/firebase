@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {
-    auth,
-    registerWithEmailAndPassword,
-    signInWithGoogle,
-} from "./firebase";
-import { updateCurrentUser, updateProfile, getAuth } from "firebase/auth";
+import { auth, registerWithEmailAndPassword, signInWithGoogle } from "./firebase";
+import "./Login.css";
+import { Link } from "react-router-dom";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -14,47 +11,32 @@ function Register() {
     const [user, loading, error] = useAuthState(auth);
 
     const register = () => {
-        if (!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password).then(() => {
-            alert("Welcome " + name)
-        });
+        if (name === '' || email === '' || password === '')
+            alert("Try again")
+        else
+            registerWithEmailAndPassword(name, email, password).then((user) => {
+                if (user)
+                    alert("Welcome " + name)
+            });
     };
 
     useEffect(() => {
         if (loading) return;
     });
     return (
-        <div className="register">
-            <div>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Full Name"
-                />
-                <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="E-mail Address"
-                />
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                <button onClick={register}>
-                    Register
-                </button>
-                <button
-                    onClick={signInWithGoogle}
-                >
-                    Register with Google
-                </button>
-                <div>
-                    Already have an account? now.
-                </div>
+        <div className="login">
+            <div className="login__container">
+                <img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' />
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="שם מלא" required />
+                <br />
+                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" required />
+                <br />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" required />
+                <br />
+                <button className="btn-login" onClick={register}>הרשמה</button>
+                <br />
+                <button className="btn-login" onClick={signInWithGoogle}>הרשמה עם Google</button>
+                <div>יש לך כבר חשבון? לחץ <Link to="/">כאן</Link>.</div>
             </div>
         </div>
     )

@@ -12,6 +12,7 @@ function Form() {
   const [type, setType] = useState('')
   const [date, setDate] = useState('')
 
+
   const navigate = useNavigate()
   const [user] = useAuthState(auth)
   let username = ''
@@ -20,7 +21,7 @@ function Form() {
     navigate('/')
   else
     username = user.displayName
-  console.log(user)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
