@@ -24,7 +24,7 @@ function Login() {
                 <br />
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                 <br />
-                <button className="btn-login" onClick={() => signInWithEmailAndPassword(email, password)}>התחברות</button>
+                <button className="btn-login" onClick={() => signInWithEmailAndPassword(auth, email, password)}>התחברות</button>
                 <br />
                 <button className="btn-login" onClick={signInWithGoogle}>התחברות עם Google</button>
                 <div>

@@ -5,6 +5,7 @@ import {
     registerWithEmailAndPassword,
     signInWithGoogle,
 } from "./firebase";
+import { updateCurrentUser, updateProfile, getAuth } from "firebase/auth";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -14,7 +15,9 @@ function Register() {
 
     const register = () => {
         if (!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password);
+        registerWithEmailAndPassword(name, email, password).then(() => {
+            alert("Welcome " + name)
+        });
     };
 
     useEffect(() => {
@@ -22,33 +25,29 @@ function Register() {
     });
     return (
         <div className="register">
-            <div className="register__container">
+            <div>
                 <input
                     type="text"
-                    className="register__textBox"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
                 />
                 <input
                     type="text"
-                    className="register__textBox"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="E-mail Address"
                 />
                 <input
                     type="password"
-                    className="register__textBox"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                 />
-                <button className="register__btn" onClick={register}>
+                <button onClick={register}>
                     Register
                 </button>
                 <button
-                    className="register__btn register__google"
                     onClick={signInWithGoogle}
                 >
                     Register with Google

@@ -20,7 +20,7 @@ function Form() {
     navigate('/')
   else
     username = user.displayName
-
+  console.log(user)
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -59,9 +59,9 @@ function Form() {
           onChange={(e) => setDescription(e.target.value)}
           placeholder=''
           value={description}></textarea></p>
-        <p><button class="btn-add" type='submit'>הוסף אירוע</button></p>
+        <p><button className="btn-add" type='submit'>הוסף אירוע</button></p>
       </form>
-      <button class="btn-signout" onClick={logout}>התנתקות</button>
+      <button className="btn-signout" onClick={logout}>התנתקות</button>
     </div >
   )
 }

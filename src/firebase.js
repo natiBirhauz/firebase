@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   GoogleAuthProvider,
   getAuth,
@@ -61,6 +60,7 @@ const logInWithEmailAndPassword = async (email, password) => {
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
+    res.user.displayName = name;
     const user = res.user;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
@@ -101,25 +101,3 @@ export {
   sendPasswordReset,
   logout,
 };
-
-// import { initializeApp } from "firebase/app";
-// import { getFirestore } from "firebase/firestore";
-
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
-
-// // Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC_4QiLZTq655RzRj1s1cnCua6CDjOJyhI",
-//   authDomain: "tasks-firebase-example.firebaseapp.com",
-//   projectId: "tasks-firebase-example",
-//   storageBucket: "tasks-firebase-example.appspot.com",
-//   messagingSenderId: "185763358176",
-//   appId: "1:185763358176:web:5748657b09be8e83c9b785"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app)
-
-// export {db}
