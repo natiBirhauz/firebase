@@ -11,8 +11,8 @@
     flex-direction: column;
     text-align: center;
     background-color: #ffffff;
-    border-radius: 20px;
-    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 10px 34px -15px rgba(0, 0, 0, 0.356);
     padding: 30px;
   }
   .login_textBox {
@@ -38,9 +38,10 @@
    }
    
    .btn-login:hover {
-    background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-    color: #fff;
+    background-color: rgb(255 249 194);
+    box-shadow: 0px 15px 20px rgb(255 249 194 0.4);
+    color: #000;
+    font-weight: bold;
     transform: translateY(-7px);
    }
    

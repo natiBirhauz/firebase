@@ -3,7 +3,7 @@
 BODY {
   direction: rtl;
   font-family: 'Open Sans', sans-serif;
-
+  background-color: rgb(223, 255, 249);
 }
 
 .App {
