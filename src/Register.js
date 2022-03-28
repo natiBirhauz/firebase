@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerWithEmailAndPassword, signInWithGoogle } from "./firebase";
+import BackButton from "./BackButton";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
@@ -26,23 +27,22 @@ function Register() {
 
 
     return (
-        <div className="login">
-            <div className="login_container">
-                <img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' />
-                <br />
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="שם מלא" required />
-                <br />
-                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" required />
-                <br />
-                <input type="password" id="pass" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" required />
-                <br />
-                <input type="password" id="validPass" onChange={() => {if(document.getElementById('pass').value !== document.getElementById('validPass').value) document.getElementById('validPass').style.borderColor="red"; else document.getElementById('validPass').style.borderColor="black" }} placeholder="אימות סיסמה" required />
-                <br />
-                <button className="btn-login" onClick={register}>הרשמה</button>
-                <br />
-                <button className="btn-login" onClick={signInWithGoogle}>הרשמה עם Google</button>
-                <div>יש לך כבר חשבון? לחץ <Link to="/">כאן</Link>.</div>
-            </div>
+        <div>
+            <BackButton />
+            <img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' />
+            <br />
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="שם מלא" required />
+            <br />
+            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" required />
+            <br />
+            <input type="password" id="pass" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" required />
+            <br />
+            <input type="password" id="validPass" onChange={() => { if (document.getElementById('pass').value !== document.getElementById('validPass').value) document.getElementById('validPass').style.borderColor = "red"; else document.getElementById('validPass').style.borderColor = "black" }} placeholder="אימות סיסמה" required />
+            <br />
+            <button className="btn-login" onClick={register}>הרשמה</button>
+            <br /><br />
+            <button className="btn-login" onClick={signInWithGoogle}>הרשמה עם Google</button>
+            <div>יש לך כבר חשבון? לחץ <Link to="/">כאן</Link>.</div>
         </div>
     )
 }
