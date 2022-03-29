@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
 
-function BackButton() {
+export default props => {
     const navigate = useNavigate();
     return (
         <div className="nav">
@@ -11,5 +11,3 @@ function BackButton() {
         </div>
     );
 }
-
-export default BackButton;

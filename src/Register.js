@@ -32,15 +32,10 @@ function Register() {
         }
     }
 
-    // useEffect(() => {
-    //     if (loading) return;
-    // });
-
     useEffect(() => {
         if (user)
             navigate("/dashboard");
     }, [user, loading]);
-
 
     return (
         <div>
