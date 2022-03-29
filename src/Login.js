@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, signInWithGoogle } from "./firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, signInWithGoogle, logInWithEmailAndPassword } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import BackButton from "./BackButton";
 import "./Login.css";
 
 function Login() {
@@ -11,12 +9,13 @@ function Login() {
     const [password, setPassword] = useState("");
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
+
     const login = () => {
-        signInWithEmailAndPassword(auth, email, password).then(function (user) {
-            alert("Welcome back " + user.user.displayName + "!")
+        logInWithEmailAndPassword(email, password).then(function (user) {
+            alert("Welcome back " + user.user.displayName + "!");
         })
             .catch(function (error) {
-                alert("Wrong email/password, Try again.")
+                alert("Wrong email/password, Try again.");
             });
     }
 
@@ -27,7 +26,6 @@ function Login() {
 
     return (
         <div>
-            <BackButton />
             <img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' />
             <h1>התחברות מתנדבים</h1>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" required />

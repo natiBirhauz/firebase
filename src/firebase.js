@@ -21,6 +21,7 @@ const signInWithGoogle = async () => {
     const user = res.user;
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
+
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -34,6 +35,7 @@ const signInWithGoogle = async () => {
     alert(err.message);
   }
 };
+
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -42,6 +44,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 };
+
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
@@ -54,6 +57,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: "local",
       email,
     });
+
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -72,7 +76,9 @@ const sendPasswordReset = async (email) => {
 
 const logout = () => {
   try {
+    const name = auth.currentUser.displayName;
     signOut(auth);
+    alert("Goodbye " + name + "!")
   }
   catch (err) {
     alert(err);

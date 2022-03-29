@@ -4,12 +4,14 @@ import Login from './Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Register from './Register';
 import Reset from './Reset';
+import BackButton from './BackButton';
+
 function App() {
   return (
-    <div className="App">
-      <div className="login">
-        <div className="login_container">
+    <div className="login">
+      <div className="container">
         <Router>
+        <BackButton />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<Form />} />
@@ -19,8 +21,7 @@ function App() {
         </Router>
       </div>
     </div>
-      </div >
-      );
+  );
 }
 
 export default App;
