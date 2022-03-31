@@ -15,7 +15,7 @@ function App() {
             <BackButton />
             <Routes>
               <Route path="/" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Form />} />
               <Route path="/newevent" element={<Form />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset" element={<Reset />} />

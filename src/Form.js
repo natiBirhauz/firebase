@@ -12,25 +12,25 @@ function Form() {
   const [type, setType] = useState('')
   const [date, setDate] = useState('')
 
-
-  const navigate = useNavigate()
   const [user] = useAuthState(auth)
   let username = ''
 
-  if (!user)
-    navigate('/')
-  else
+  const navigate = useNavigate();
+  if(user)
     username = user.displayName
-
+  else
+    navigate('/');
+    
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await addDoc(collection(db, 'messages'), {
         name: username,
+        event_name: title,
+        event_date: date,
         type: type,
-        date: date,
-        title: title,
         description: description,
+        is_active: false,
         created: Timestamp.now()
       })
     } catch (err) {
