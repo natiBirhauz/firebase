@@ -4,15 +4,14 @@ import Form from './Form'
 import Login from './Login';
 import Register from './Register';
 import Reset from './Reset';
-import BackButton from './BackButton';
-import Dashboard from './Dashboard';
+import Header from './Header';
 
 function App() {
   return (
       <div className="login">
         <div className="container">
           <Router>
-            <BackButton />
+            <Header />
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/dashboard" element={<Form />} />

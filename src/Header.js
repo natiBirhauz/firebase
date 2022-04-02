@@ -26,9 +26,10 @@ export default props => {
                 <div class="dropdown-content">
                     <a href="#">פרופיל</a>
                     <a href="#">אירועים</a>
-                    <a href="#" onClick={() => { signOut(auth).then(() => { alert("OK")}) }}>התנתקות</a>
+                    <a href="#" onClick={() => { signOut(auth).then(() => { alert("OK") }) }}>התנתקות</a>
                 </div>
             </div>
+            <a href="/"><img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' /></a>
         </div>
     );
 }
