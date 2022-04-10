@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css';
-import Form from './Form'
+import NewEvent from './NewEvent'
+import NewDelivery from './NewDelivery'
 import Login from './Login';
 import Register from './Register';
 import Reset from './Reset';
 import Header from './Header';
+import Dashboard from './Dashboard';
 
 function App() {
   return (
@@ -14,8 +16,9 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Login />} />
-              <Route path="/dashboard" element={<Form />} />
-              <Route path="/newevent" element={<Form />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/newevent" element={<NewEvent />} />
+              <Route path="/newdelivery" element={<NewDelivery />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset" element={<Reset />} />
             </Routes>

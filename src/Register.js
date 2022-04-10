@@ -8,6 +8,7 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
@@ -39,7 +40,6 @@ function Register() {
 
     return (
         <div>
-            <img src="https://static.wixstatic.com/media/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg/v1/fit/w_2500,h_1330,al_c/231ad7_7b2caab76cf4460b81167f13d65a5302~mv2.jpg" height='300' width='300' />
             <h1>רישום מתנדב חדש</h1>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="שם מלא" required />
             <br />

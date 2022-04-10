@@ -94,3 +94,21 @@ input, select, textarea {
 .forward {
   float: right;
 }
+
+.container2, .container2 a {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-decoration: none;
+  color: #000;
+}
+
+.flex {
+  padding: 15px 25px 15px 25px;
+  border-radius: 10px;
+  width: calc(80% * (1/4));
+  margin: 10px 10px 0 10px;
+  text-align: center;
+  background: #B7E7DE;
+}
