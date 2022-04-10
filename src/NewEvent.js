@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import { useNavigate } from 'react-router-dom';
 
-function Form() {
+function NewEvent() {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -67,4 +67,4 @@ function Form() {
   )
 }
 
-export default Form;
+export default NewEvent;

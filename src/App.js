@@ -7,6 +7,7 @@ import Register from './Register';
 import Reset from './Reset';
 import Header from './Header';
 import Dashboard from './Dashboard';
+import Profile from './Profile'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/newevent" element={<NewEvent />} />
               <Route path="/newdelivery" element={<NewDelivery />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/register" element={<Register />} />
               <Route path="/reset" element={<Reset />} />
             </Routes>

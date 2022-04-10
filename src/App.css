@@ -112,3 +112,8 @@ input, select, textarea {
   text-align: center;
   background: #B7E7DE;
 }
+
+.flex:hover {
+  background: #abd8cf;
+  color: white;
+}
