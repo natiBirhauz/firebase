@@ -3,7 +3,6 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import { useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
-import { useNavigate } from 'react-router-dom';
 
 function NewDelivery() {
 
@@ -15,12 +14,9 @@ function NewDelivery() {
   const [user] = useAuthState(auth)
   let username = ''
 
-  const navigate = useNavigate();
-  if(user)
+  if (user)
     username = user.displayName
-  else
-    navigate('/');
-    
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {

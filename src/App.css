@@ -117,3 +117,15 @@ input, select, textarea {
   background: #abd8cf;
   color: white;
 }
+
+.form_profile {
+  display: inline;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.form_profile p {
+  flex: 50%;
+}
