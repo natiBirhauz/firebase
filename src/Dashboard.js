@@ -12,7 +12,7 @@ function Dashboard() {
                 <span className="flex"><Link to="/newdelivery">יצירת משלוח חדש</Link></span>
                 <span className="flex"><Link to="/newevent">עריכת מתנדבים</Link></span>
                 <span className="flex"><Link to="/newevent">עריכת מוטבים</Link></span>
-                <span className="flex"><Link to="/view">אירועים קרובים</Link></span><span className="flex"><Link to="/register">יצירת משתמש חדש</Link></span>
+                <span className="flex"><Link to="/users">אירועים קרובים</Link></span><span className="flex"><Link to="/register">יצירת משתמש חדש</Link></span>
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ import Reset from './Reset';
 import Header from './Header';
 import Dashboard from './Dashboard';
 import Profile from './Profile'
-import View from './View'
+import Users from './Users'
 import './App.css';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/reset" element={<Reset />} />
-            <Route path="/view" element={<View />} />
+            <Route path="/users" element={<Users />} />
           </Routes>
         </Router>
       </div>

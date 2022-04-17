@@ -15,28 +15,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// const googleProvider = new GoogleAuthProvider();
-// const signInWithGoogle = async () => {
-//   try {
-//     const res = await signInWithPopup(auth, googleProvider);
-//     const user = res.user;
-//     const q = query(collection(db, "users"), where("uid", "==", user.uid));
-//     const docs = await getDocs(q);
-
-//     if (docs.docs.length === 0) {
-//       await addDoc(collection(db, "users"), {
-//         uid: user.uid,
-//         name: user.displayName,
-//         authProvider: "google",
-//         email: user.email,
-//       });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     alert(err.message);
-//   }
-// };
-
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -46,7 +24,7 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 
-const registerWithEmailAndPassword = async (name, email, password, gender) => {
+const registerWithEmailAndPassword = async (name, email, password, gender, tel) => {
   const adminUser = auth.currentUser
 
   try {
@@ -64,6 +42,7 @@ const registerWithEmailAndPassword = async (name, email, password, gender) => {
         email,
         password,
         gender,
+        tel,
         isAdmin: false,
       });
     });
@@ -77,10 +56,10 @@ const registerWithEmailAndPassword = async (name, email, password, gender) => {
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
+    //alert("Password reset link sent!");
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    //alert(err.message);
   }
 };
 
@@ -88,10 +67,9 @@ const logout = () => {
   try {
     const name = auth.currentUser.displayName;
     signOut(auth);
-    alert("Goodbye " + name + "!")
   }
   catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
 
