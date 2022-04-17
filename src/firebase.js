@@ -65,7 +65,6 @@ const sendPasswordReset = async (email) => {
 
 const logout = () => {
   try {
-    const name = auth.currentUser.displayName;
     signOut(auth);
   }
   catch (err) {
