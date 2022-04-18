@@ -1,6 +1,5 @@
 import { getAuth, updateProfile, updateEmail, signInAnonymously, signInWithEmailAndPassword } from 'firebase/auth'
 import { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { app, auth } from './firebase';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
@@ -15,12 +14,8 @@ function Profile() {
     const db = getFirestore(app);
 
     let username = ''
-    // if (user)
-    //     username = user.displayName
-
     const loginAndUpdate = async () => {
         // Calling authentication function
-        // let auth = getAuth()
 
         // You need to pass the authentication instance as param
         alert(user.currentUser.displayName)

@@ -57,11 +57,9 @@ function NewEvent() {
 
         <p><label>פירוט: </label><textarea rows="5" cols="30"
           onChange={(e) => setDescription(e.target.value)}
-          placeholder=""
-          value={description}></textarea></p>
+          placeholder=""></textarea></p>
         <p><button className="btn-add" type="submit">הוסף אירוע</button></p>
       </form>
-      <button className="btn-signout" onClick={logout}>התנתקות</button>
     </div >
   )
 }
