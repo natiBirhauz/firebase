@@ -12,7 +12,7 @@ function Login() {
     const navigate = useNavigate();
 
     const login = () => {
-        logInWithEmailAndPassword(email, password).then(() => { navigate('/admin') });
+        logInWithEmailAndPassword(email, password).then(() => { navigate('/login') });
     }
 
     useEffect(() => {
