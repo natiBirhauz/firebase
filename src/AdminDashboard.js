@@ -4,7 +4,7 @@ import AdminPer from "./AdminPer"
 import "./App.css";
 
 function AdminDashboard() {
-
+ 
     return (
         <div>
             <AdminPer />
