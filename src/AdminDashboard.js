@@ -1,12 +1,15 @@
-import { logout } from './firebase';
-import { Link } from 'react-router-dom';
-import './App.css';
+import { logout } from "./firebase";
+import { Link } from "react-router-dom";
+import AdminPer from "./AdminPer"
+import "./App.css";
 
-function Dashboard() {
+function AdminDashboard() {
 
     return (
-        <div><h1>האזור האישי</h1>
-            <h2>ברוכים הבאים</h2>
+        <div>
+            <AdminPer />
+            <h1>האזור האישי</h1>
+            <h2>ממשק מנהל</h2>
             <div className="container2">
                 <span className="flex"><Link to="/profile">פרופיל</Link></span>
                 <span className="flex"><Link to="/newevent">יצירת אירוע חדש</Link></span>
@@ -15,10 +18,10 @@ function Dashboard() {
                 <span className="flex"><Link to="/newevent">עריכת מוטבים</Link></span>
                 <span className="flex"><Link to="/events">אירועים קרובים</Link></span>
                 <span className="flex"><Link to="/register">יצירת משתמש חדש</Link></span>
-                <span className="flex logout"><Link to="/" onClick={() => {logout()}}>התנתק</Link></span>
+                <span className="flex logout"><Link to="/login" onClick={() => { logout() }}>התנתק</Link></span>
             </div>
         </div>
     )
 };
 
-export default Dashboard;
+export default AdminDashboard;

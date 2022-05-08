@@ -1,9 +1,9 @@
-import { db, logout } from "./firebase"
+import { db } from "./firebase"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function NewEvent() {
 
@@ -22,7 +22,7 @@ function NewEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await addDoc(collection(db, "messages"), {
+      await addDoc(collection(db, "events"), {
         name: username,
         event_name: title,
         event_date: date,
@@ -34,7 +34,7 @@ function NewEvent() {
     } catch (err) {
       alert(err)
     }
-    navigate('/');
+    navigate("/");
   }
 
   return (

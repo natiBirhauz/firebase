@@ -1,8 +1,6 @@
-import { getAuth, updateProfile, updateEmail, signInAnonymously, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, updateProfile, updateEmail } from 'firebase/auth'
 import { useState } from 'react';
-import { app, auth } from './firebase';
 import { useNavigate } from 'react-router-dom';
-import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
 
 function Profile() {
 
@@ -11,7 +9,6 @@ function Profile() {
 
     const navigate = useNavigate();
     const user = getAuth();
-    const db = getFirestore(app);
 
     let username = ''
     const loginAndUpdate = async () => {

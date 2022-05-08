@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
+
 import './Users.css'
+
+function delUser(uid) {
+    console.log(uid);
+    // Need AdminSDK
+    // getAuth().deleteUser(uid).then(() => {
+    //         console.log('Successfully deleted user');
+    //     })
+    //     .catch((error) => {
+    //         console.log('Error deleting user:', error);
+    //     });
+}
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -12,7 +24,7 @@ function Users() {
             setUsers(data.docs.map((doc) => ({ ...doc.data() })))
         }
         getUsers();
-    }, []);
+    });
     return (
         <div className="table-wrapper">
             <h1>רשימת מתנדבים</h1>
@@ -22,7 +34,7 @@ function Users() {
                         <td>שם</td>
                         <td>מייל</td>
                         <td>מין</td>
-                        <td>עריכה/מחיקה</td>
+                        <td>פעולות</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,15 +45,14 @@ function Users() {
                                 <td>{user.email}</td>
                                 <td>{user.gender}</td>
                                 <td>
-                                    <a href="#"><img src="../images/edit.png" alt="עריכה" /></a>
-                                    <a href="#"><img src="../images/delete.png" alt="מחיקה" /></a>
+                                    <img src="../images/edit.png" alt="עריכה" />
+                                    <button onClick={() => delUser(user.uid)}><img src="../images/delete.png" alt="מחיקה" /></button>
                                 </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
-
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.css";
+import AdminPer from "./AdminPer";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -11,15 +12,18 @@ function Login() {
     const navigate = useNavigate();
 
     const login = () => {
-        logInWithEmailAndPassword(email, password);
+        logInWithEmailAndPassword(email, password).then(() => { navigate('/admin') });
     }
+
     useEffect(() => {
-        if (user)
-            navigate("/dashboard");
-    }, [user, loading]);
+        if (user) {
+            navigate('');
+        }
+    }, [user, navigate]);
 
     return (
         <div>
+            <AdminPer />
             <h1>התחברות מתנדבים</h1>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" autoComplete="username" required />
             <br />

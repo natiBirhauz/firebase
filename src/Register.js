@@ -1,6 +1,5 @@
 import { React, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, registerWithEmailAndPassword } from "./firebase";
+import { registerWithEmailAndPassword } from "./firebase";
 import "./Login.css";
 
 function Register() {
@@ -10,7 +9,6 @@ function Register() {
     const [name, setName] = useState("");
     const [gender, setGender] = useState("");
     const [tel, setTel] = useState("");
-    const [user, loading, error] = useAuthState(auth);
 
     const register = () => {
         setPassword(Math.random().toString(15).substring(2, 20));
