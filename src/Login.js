@@ -2,17 +2,35 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./Login.css";
 import AdminPer from "./AdminPer";
+import "./Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, loading] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const navigate = useNavigate();
+    var errOccured = false;
 
-    const login = () => {
-        logInWithEmailAndPassword(email, password).then(() => { navigate('/login') });
+    const login = event => {
+        event.preventDefault();
+        const err = document.getElementById('err');
+        logInWithEmailAndPassword(email, password).catch((e) => {
+            if (email === '')
+                err.innerText = 'לא הוכנסה כתובת אימייל';
+            else if (e.message.includes('user-not-found'))
+                err.innerHTML = 'לא נמצא משתמש';
+            else if (e.message.includes('internal-error' || e.message.includes('wrong-password')))
+                err.innerHTML = 'בדוק פרטי התחברות ונסה שנית';
+            else if (e.message.includes('too-many-requests'))
+                err.innerHTML = 'עכב נסיונות התחברות מרובים, החשבון ננעל זמנית. נסה מאוחר יותר או שחזר את הסיסמה';
+            errOccured = true;
+        }).finally(() => {
+            if (!errOccured) {
+                err.style.color = 'green';
+                err.innerText = 'התחברת בהצלחה ✓, הינך מועבר לאיזור האישי';
+            }
+        });
     }
 
     useEffect(() => {
@@ -25,11 +43,13 @@ function Login() {
         <div>
             <AdminPer />
             <h1>התחברות מתנדבים</h1>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" autoComplete="username" required />
-            <br />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" autoComplete="current-password" required />
-            <br />
-            <button className="btn-login" onClick={login}>התחברות</button>
+            <form onSubmit={login}>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" autoComplete="username" required />
+                <br />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" autoComplete="current-password" required />
+                <p id="err" className="err"></p>
+                <button className="btn-login" type="submit">התחברות</button>
+            </form>
             <div>
                 <Link to="/reset">שכחתי סיסמה</Link>
             </div>
