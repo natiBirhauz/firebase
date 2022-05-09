@@ -3,22 +3,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Profile() {
-
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-
     const navigate = useNavigate();
     const user = getAuth();
-
     let username = ''
     const loginAndUpdate = async () => {
-        // Calling authentication function
-
-        // You need to pass the authentication instance as param
         alert(user.currentUser.displayName)
-        // Passing user's object as first param and updating it
         updateProfile(user.currentUser, name);
-
         updateEmail(user.currentUser, email).then(navigate('/dashboard'));
     }
 
