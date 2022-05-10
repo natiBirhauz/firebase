@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword } from "./firebase";
+import { auth, logInWithEmailAndPassword } from "./Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import AdminPer from "./AdminPer";
-import "./Login.css";
+import "../components/layout/Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -20,11 +20,12 @@ function Login() {
                 err.innerText = 'לא הוכנסה כתובת אימייל';
             else if (e.message.includes('user-not-found'))
                 err.innerHTML = 'לא נמצא משתמש';
-            else if (e.message.includes('internal-error' || e.message.includes('wrong-password')))
+            else if ((e.message.includes('internal-error') || e.message.includes('wrong-password')))
                 err.innerHTML = 'בדוק פרטי התחברות ונסה שנית';
             else if (e.message.includes('too-many-requests'))
                 err.innerHTML = 'עכב נסיונות התחברות מרובים, החשבון ננעל זמנית. נסה מאוחר יותר או שחזר את הסיסמה';
             errOccured = true;
+            console.log(e);
         }).finally(() => {
             if (!errOccured) {
                 err.style.color = 'green';

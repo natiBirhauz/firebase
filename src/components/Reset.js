@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { sendPasswordReset } from './firebase';
-import './Login.css';
+import { sendPasswordReset } from './Firebase';
+import '../components/layout/Login.css';
 
 function Reset() {
     const [email, setEmail] = useState('');

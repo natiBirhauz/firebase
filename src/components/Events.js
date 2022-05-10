@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db } from "./firebase";
-import { collection, getDocs, deleteDoc, doc, where } from "firebase/firestore";
+import { db } from "./Firebase";
+import { collection, getDocs } from "firebase/firestore";
 import "./Users.css"
 
 function Events() {
@@ -8,13 +8,13 @@ function Events() {
     const eventsCollectionRef = collection(db, "events");
 
     const delEvent = (created) => {
-        console.log(events.find((doc) => (doc.created === created)));
-        // setEvents(getDocs(eventsCollectionRef));.then((querySnapshot) => {
-        //     querySnapshot.forEach((doc) => {
+        //     console.log(events.find((doc) => (doc.created === created)));
+        //     // setEvents(getDocs(eventsCollectionRef));.then((querySnapshot) => {
+        //     //     querySnapshot.forEach((doc) => {
 
-        //         console.log(doc.id, " => ", doc.data())
-        //    })
-        //})
+        //     //         console.log(doc.id, " => ", doc.data())
+        //     //    })
+        //     //})
     }
 
     useEffect(() => {
@@ -50,7 +50,7 @@ function Events() {
                                 <td>{event.is_active.toString()}</td>
                                 <td>
                                     <img src="../images/edit.png" alt="עריכה" />
-                                    <a onClick={() => delEvent(event.created)}><img src="../images/delete.png" alt="מחיקה" /></a>
+                                    <a href="/" onClick={() => delEvent(event.created)}><img src="../images/delete.png" alt="מחיקה" /></a>
                                 </td>
                             </tr>
                         )

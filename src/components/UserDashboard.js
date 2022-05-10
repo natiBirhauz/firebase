@@ -1,6 +1,6 @@
-import { logout } from "./firebase";
+import { logout } from "./Firebase";
 import { Link } from "react-router-dom";
-import "./App.css";
+import "../components/layout/App.css";
 
 function AdminDashboard() {
 

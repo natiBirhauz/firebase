@@ -1,15 +1,16 @@
-import { db, logout } from "./firebase"
+import { db, auth } from "./Firebase"
 import { collection, addDoc, Timestamp } from "firebase/firestore"
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import { useNavigate } from "react-router-dom";
 
-function NewDelivery() {
+function NewEvent() {
 
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [type, setType] = useState("")
-  const [date, setDate] = useState("")
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const [date, setDate] = useState("");
 
   const [user] = useAuthState(auth)
   let username = ""
@@ -20,18 +21,19 @@ function NewDelivery() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await addDoc(collection(db, "messages"), {
+      await addDoc(collection(db, "events"), {
         name: username,
         event_name: title,
         event_date: date,
         type: type,
         description: description,
-        is_active: false,
+        is_active: true,
         created: Timestamp.now()
       })
     } catch (err) {
       alert(err)
     }
+    navigate("/");
   }
 
   return (
@@ -54,13 +56,11 @@ function NewDelivery() {
 
         <p><label>פירוט: </label><textarea rows="5" cols="30"
           onChange={(e) => setDescription(e.target.value)}
-          placeholder=""
-          value={description}></textarea></p>
+          placeholder=""></textarea></p>
         <p><button className="btn-add" type="submit">הוסף אירוע</button></p>
       </form>
-      <button className="btn-signout" onClick={logout}>התנתקות</button>
     </div >
   )
 }
 
-export default NewDelivery;
+export default NewEvent;
