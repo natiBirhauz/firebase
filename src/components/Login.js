@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword } from "./Firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { logInWithEmailAndPassword } from "./Firebase";
 import AdminPer from "./AdminPer";
 import "../components/layout/Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user] = useAuthState(auth);
-    const navigate = useNavigate();
     var errOccured = false;
 
     const login = event => {
@@ -33,13 +30,6 @@ function Login() {
             }
         });
     }
-
-    useEffect(() => {
-        if (user) {
-            navigate('');
-        }
-    }, [user, navigate]);
-
     return (
         <div>
             <AdminPer />
