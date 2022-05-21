@@ -15,7 +15,6 @@ function Profile() {
 
     const loginAndUpdate = event => {
         event.preventDefault();
-
         try {
             updateProfile(user.currentUser, { displayName: name });
             updateEmail(user.currentUser, email);

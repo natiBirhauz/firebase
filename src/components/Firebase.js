@@ -43,6 +43,7 @@ const registerWithEmailAndPassword = async (name, email, password, gender, tel) 
         gender,
         tel,
         isAdmin: false,
+        isActive: true,
       });
     });
   } catch (err) {

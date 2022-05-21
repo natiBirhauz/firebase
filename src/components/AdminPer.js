@@ -1,5 +1,5 @@
- import { getAuth } from "firebase/auth";
- import { db } from "./Firebase";
+import { getAuth } from "firebase/auth";
+import { db, logout } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,17 +15,22 @@ const AdminPer = () => {
             if (user) {
                 getDocs(collection(db, "users")).then((data) => {
                     data.forEach((doc) => {
-                        if (!isAdmin && user && user.uid === doc.data().uid && doc.data().isAdmin) {
+                        if (!isAdmin && user && user.uid === doc.data().uid && doc.data().isAdmin && doc.data().isActive) {
                             console.log('Logged in as administrator (', doc.data().name, ')');
                             isAdmin = true;
                             navigate('/admin');
+                        }
+                        else if (user && user.uid === doc.data().uid && !doc.data().isActive) {
+                            logout(user);
+                            alert("You are not authorized anymore to access this application.");
+                            navigate('/');
+                            return;
                         }
                     });
                     if (user && isAdmin === false)
                         navigate('/dashboard');
                 });
             } else {
-                console.log("User not connected");
                 navigate('/login');
             }
         });
