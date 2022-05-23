@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { logInWithEmailAndPassword } from "./Firebase";
-import logo from '../assets/logo.jpg'
+import logo from '../assets/logo.jpg';
 import AdminPer from "./AdminPer";
 
 function Login() {

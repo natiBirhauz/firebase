@@ -1,6 +1,7 @@
 import { getAuth, updateProfile, updateEmail, updatePassword } from 'firebase/auth'
 import { collection, getDocs, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { db } from "./Firebase";
 import Header from './Header';
@@ -16,13 +17,19 @@ function Profile() {
     const user = getAuth();
     var failed = false;
 
+    onAuthStateChanged(user, () => {
+        if (user.currentUser) {
+            setName(user.currentUser.displayName);
+            setEmail(user.currentUser.email);
+        }
+    });
+
     const loginAndUpdate = event => {
         event.preventDefault();
         try {
             updateProfile(user.currentUser, { displayName: name });
             updateEmail(user.currentUser, email);
             updatePassword(user.currentUser, password);
-
         } catch (e) {
             if (e.code === 'auth/invalid-email')
                 console.log("הכנס כתובת מייל תקינה")
@@ -61,15 +68,15 @@ function Profile() {
                         <h2 className="user-details__profile__title">פרופיל</h2>
                         <div className="user-details__profile__item spaced">
                             <p className="property">שם מלא:</p>
-                            <p className="property--value">{user.currentUser.displayName}</p>
+                            <p className="property--value">{name}</p>
                         </div>
                         <div className="user-details__profile__item spaced">
                             <p className="property">אימייל:</p>
-                            <p className="property--value">{user.currentUser.email}</p>
+                            <p className="property--value">{email}</p>
                         </div>
                         <div className="user-details__profile__item spaced">
                             <p className="property">טלפון:</p>
-                            <p className="property--value">{user.currentUser.phoneNumber}</p>
+                            <p className="property--value">{null}</p>
                         </div>
                         <div className="user-details__profile__item spaced">
                             <p className="property">תאריך לידה:</p>

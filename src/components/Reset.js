@@ -1,13 +1,13 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendPasswordReset } from './Firebase';
-import Header from './Header';
+import logo from '../assets/logo.jpg';
 
 function Reset() {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
     var errOccured = false;
-    
+
     const sendPassword = (event) => {
         event.preventDefault();
         const err = document.getElementById('err');
@@ -31,18 +31,18 @@ function Reset() {
 
     return (
         <div>
-            <Header />
-            <br />
-            <div className="box container">
-                <h1 className="user-details__title title container">איפוס סיסמה</h1>
-            </div>
-            <br />
-            <div className="box container">
-                <form onSubmit={sendPassword}>
-                    <input className="form__input" id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
-                    <p id='err' className='err'></p>
-                    <button className='btn--accent'>אפס</button>
-                </form>
+            <div className="login centered">
+                <div className="box container">
+                    <div className="login__container container">
+                        <a href="/"><img src={logo} className='logo--big' alt="Amitsim" /></a>
+                        <h1 className="user-details__title title container">איפוס סיסמה</h1>
+                        <form onSubmit={sendPassword}>
+                            <input className="form__input" id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
+                            <p id='err' className='err'></p>
+                            <button className='btn--accent'>אפס</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     );
