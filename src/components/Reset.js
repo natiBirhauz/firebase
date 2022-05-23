@@ -7,7 +7,9 @@ function Reset() {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
     var errOccured = false;
-    const sendPassword = () => {
+    
+    const sendPassword = (event) => {
+        event.preventDefault();
         const err = document.getElementById('err');
         sendPasswordReset(email)
             .catch((e) => {
@@ -22,7 +24,7 @@ function Reset() {
                 if (!errOccured) {
                     err.style.color = 'green';
                     err.innerText = 'נשלח בהצלחה ✓, הינך מועבר לדף ההתחברות';
-                    setTimeout(() => { navigate(-1) }, 2500);
+                    setTimeout(() => { navigate("/login") }, 2500);
                 }
             });
     }
@@ -32,15 +34,15 @@ function Reset() {
             <Header />
             <br />
             <div className="box container">
-                <h1 className="user-details__title title container">רישום מתנדב חדש</h1>
+                <h1 className="user-details__title title container">איפוס סיסמה</h1>
             </div>
             <br />
             <div className="box container">
-                <h1>שכחתי סיסמה</h1>
-                <input id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
-                <p id='err' className='err'></p>
-                <br />
-                <button className='btn-login' onClick={sendPassword}>שלח</button>
+                <form onSubmit={sendPassword}>
+                    <input className="form__input" id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
+                    <p id='err' className='err'></p>
+                    <button className='btn--accent'>אפס</button>
+                </form>
             </div>
         </div>
     );
