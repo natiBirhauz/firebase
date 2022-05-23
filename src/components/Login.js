@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { logInWithEmailAndPassword } from "./Firebase";
+import logo from '../assets/logo.jpg'
 import AdminPer from "./AdminPer";
-import "../components/layout/Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -22,7 +22,6 @@ function Login() {
             else if (e.message.includes('too-many-requests'))
                 err.innerHTML = 'עכב נסיונות התחברות מרובים, החשבון ננעל זמנית. נסה מאוחר יותר או שחזר את הסיסמה';
             errOccured = true;
-            console.log(e);
         }).finally(() => {
             if (!errOccured) {
                 err.style.color = 'green';
@@ -31,18 +30,24 @@ function Login() {
         });
     }
     return (
-        <div>
-            <AdminPer />
-            <h1>התחברות מתנדבים</h1>
-            <form onSubmit={login}>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" autoComplete="username" required />
-                <br />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" autoComplete="current-password" required />
-                <p id="err" className="err"></p>
-                <button className="btn-login" type="submit">התחברות</button>
-            </form>
-            <div>
-                <Link to="/reset">שכחתי סיסמה</Link>
+        <div className="login centered">
+            <div className="box container">
+                <div className="login__container container">
+                    <a href="/"><img src={logo} className='logo--big' alt="Amitsim" /></a>
+                    <div>
+                        <AdminPer url="/menu" />
+                        <h1 className="form__title title">התחברות מתנדבים</h1>
+                        <form className="login__form" onSubmit={login}>
+                            <input className="form__input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="כתובת אימייל" autoComplete="username" required />
+                            <input className="form__input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" autoComplete="current-password" required />
+                            <p id="err" className="err"></p>
+                            <button className="form__btn btn--accent" type="submit">התחברות</button>
+                        </form>
+                        <div className="form__links">
+                            <Link to="/reset" className="form__link small"><small>שכחת את הסיסמה?</small></Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

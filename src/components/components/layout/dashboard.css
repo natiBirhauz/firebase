@@ -1,0 +1,54 @@
+.main__title {
+    margin-bottom: 0;
+}
+
+section {
+    text-align: start;
+    margin-bottom: 1em;
+}
+
+.section__title {
+    margin-bottom: .8em;
+}
+
+.section__row {
+    gap: 1em;
+}
+
+.percentage {
+    border-radius: 50%;
+    padding: 2em 1.7em;
+    font-weight: 500;
+    border: 15px solid steelblue;
+}
+
+/*status tables*/
+.status-tables .container {
+    text-align: start;
+}
+
+.status-tables--group h3 {
+    text-decoration: underline;
+}
+
+.seperator {
+    width: 100%;
+    border-top: 3px solid var(--clr-neutral-700);
+    border-bottom: 0;
+    border-inline: 0;
+    border-style: dashed;
+
+    margin: 1.5em auto;
+}
+
+.status-tables__linker {
+    text-align: center;
+}
+
+@media (min-width: 45em) {
+    .row {
+        display: flex;
+        gap: 2em;
+    }
+}
+

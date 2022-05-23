@@ -1,0 +1,156 @@
+
+/*for every page that has the design with the navbar (After logging in)*/
+
+header {
+    background-color: var(--clr-neutral-100);
+    box-shadow: var(--box-shadow);
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .header__logo {
+    margin-block: 0.5em;
+  }
+  
+  header .container {
+    width: 90%;
+  }
+  
+  .nav {
+    display: none;
+    background-color: var(--clr-neutral-100);
+    border-radius: 0 0 10px 10px;
+  }
+  
+  /*----------------Shows the "menu" icon-----------------*/
+  .nav-toggle {
+    cursor: pointer;
+    border: 0;
+    width: 3em;
+    height: 3em;
+    padding: 0;
+    background-color: var(--clr-neutral-100);
+    transition: opacity 250ms ease;
+  }
+  
+  .nav-toggle:focus,
+  .nav-toggle:hover {
+    opacity: 0.75;
+  }
+  
+  .hamburger {
+    width: 60%;
+    position: relative;
+  }
+  
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    display: block;
+    margin: 0 auto;
+    height: 3px;
+    background: var(--clr-neutral-900);
+  }
+  
+  .hamburger::before,
+  .hamburger::after {
+    content: "";
+    width: 100%;
+  }
+  
+  .hamburger::before {
+    transform: translateY(-7px);
+  }
+  
+  .hamburger::after {
+    transform: translateY(3.5px);
+  }
+  
+  .hamburger--close::after {
+    display: inline-block;
+    content: "\00d7"; /* This will render the 'X' */
+    font-size: 3rem;
+    transform: translateY(-6px);
+  }
+  
+  /*----------------------------------------*/
+  
+  .nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 2em;
+  }
+  
+  .nav__item {
+    margin-block: 1em;
+  }
+  
+  .nav__link {
+    color: var(--clr-neutral-900);
+  }
+  
+  .nav__link:hover {
+    color: var(--clr-primary-bold);
+  }
+  
+  .nav--visible {
+    display: block;
+    transform-origin: top center;
+    animation: growDown 300ms ease-in-out forwards;
+    padding: 0.3em;
+  }
+  
+  @keyframes growDown {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+  
+  /*navbar for larger screens*/
+  @media (min-width: 45em) {
+  
+    .nav-toggle {
+      display: none;
+    }
+  
+    header > .container {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .nav {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      font-size: 18px;
+
+    }
+  
+    .nav__list {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 0;
+    }
+  
+    .nav__list--secondary {
+      margin-right: 2em;
+    }
+  
+    .nav__item {
+      margin: 0;
+    }
+  
+    .nav--btn .btn--accent {
+      transform: translateY(-6px);
+    }
+  
+    .header__logo {
+      width: 97px;
+    }
+  }

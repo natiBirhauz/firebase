@@ -3,6 +3,9 @@ import { collection, getDocs, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from "./Firebase";
+import Header from './Header';
+import AdminPer from './AdminPer';
+import '../components/layout/profile.css';
 
 function Profile() {
     const [name, setName] = useState();
@@ -45,32 +48,55 @@ function Profile() {
     }
 
     return (
-        <div>
-            <h1>פרופיל</h1>
-            <form className='form_profile' onSubmit={loginAndUpdate}>
-                <p>
-                    <label htmlFor='name'>שם מלא: </label>
-                    <input id='name' type='text' name='name' defaultValue={user.currentUser.displayName} onChange={(e) => setName(e.target.value)} />
-                </p>
-                <p>
-                    <label htmlFor='id'>תעודת זהות: </label>
-                    <input id='id' type='number' defaultValue={null} />
-                </p>
-                <p>
-                    <label htmlFor='id'>אימייל: </label>
-                    <input id='email' type='email' defaultValue={user.currentUser.email} onChange={(e) => setEmail(e.target.value)} />
-                </p>
-                <p>
-                    <label htmlFor='phone'>פלאפון: </label>
-                    <input id='phone' type='tel' defaultValue={user.currentUser.phoneNumber} onChange={(e) => setPhone(e.target.value)} />
-                </p>
-                <p>
-                    <label htmlFor='password'>סיסמה: </label>
-                    <input id='password' type='password' onChange={(e) => setPassword(e.target.value)} />
-                </p>
-                <p><button className='btn-add' type='submit'>שמור שינויים</button></p>
-            </form>
-        </div >
+        <div className="user-details">
+            <Header />
+            <AdminPer url="/profile" />
+            <br />
+            <div className="box container">
+                <h1 className="user-details__title title container">פרטי משתמש</h1>
+            </div>
+            <div className="container row">
+                <div className="box box--sub col">
+                    <div className="user-details__profile container">
+                        <h2 className="user-details__profile__title">פרופיל</h2>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">שם מלא:</p>
+                            <p className="property--value">{user.currentUser.displayName}</p>
+                        </div>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">אימייל:</p>
+                            <p className="property--value">{user.currentUser.email}</p>
+                        </div>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">טלפון:</p>
+                            <p className="property--value">{user.currentUser.phoneNumber}</p>
+                        </div>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">תאריך לידה:</p>
+                            <p className="property--value"></p>
+                        </div>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">עיר:</p>
+                            <p className="property--value"></p>
+                        </div>
+                        <div className="user-details__profile__item spaced">
+                            <p className="property">תעודת זהות:</p>
+                            <p className="property--value"></p>
+                        </div>
+                        <button className="btn--accent">ערוך</button>
+                    </div>
+                </div>
+                <div className="box box--sub">
+                    <div className="user-details__roles container">
+                        <h2 className="user-details__roles__title">רשימת תפקידים</h2>
+                        <ol className="user-details__roles__list">
+                            <li>ספק מזון</li>
+                        </ol>
+                        <button className="btn--accent">ערוך</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
