@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs } from "firebase/firestore";
+import yes from '../assets/yes.png';
+import no from '../assets/no.png';
 import "./Users.css"
 
 function Events() {
     const [events, setEvents] = useState([]);
+    const [roles, setRoles] = useState([]);
     const eventsCollectionRef = collection(db, "events");
-
+    let res = [];
     const delEvent = (created) => {
         //     console.log(events.find((doc) => (doc.created === created)));
         //     // setEvents(getDocs(eventsCollectionRef));.then((querySnapshot) => {
@@ -19,11 +22,20 @@ function Events() {
 
     useEffect(() => {
         const getEvents = async () => {
-            const data = await getDocs(eventsCollectionRef);
-            setEvents(data.docs.map((doc) => (doc.data)));
+            const data = await getDocs(collection(db, 'events'));
+            setEvents(data.docs.map((doc) => ({ ...doc.data() })))
         }
         getEvents();
-    });
+    }, []);
+
+    useEffect(() => {
+        const getRoles = async () => {
+            const data = await getDocs(collection(db, 'roles'));
+            setRoles(data.docs.map((doc) => ({ ...doc.data() })))
+            await roles.forEach((e) => console.log(e));
+        }
+        getRoles();
+    }, []);
 
     return (
         <div className="table-wrapper">
@@ -31,6 +43,7 @@ function Events() {
             <table className="fl-table">
                 <thead>
                     <tr>
+                        <td>ID</td>
                         <td>שם האירוע</td>
                         <td>תאריך</td>
                         <td>סוג</td>
@@ -41,13 +54,22 @@ function Events() {
                 </thead>
                 <tbody>
                     {events.map((event) => {
+                        let active;
+                        event.is_active ? active = yes : active = no;
+                        console.log(res);
+                        // roles.forEach((role, i) => {
+                        //     console.log(role);
+                        //     // if (roles[i].role == event.roles[i])
+                        //     //     console.log(role.role);
+                        // });
                         return (
-                            <tr key={event.created}>
+                            <tr key={event.id}>
+                                <td>{event.id}</td>
                                 <td>{event.event_name}</td>
                                 <td>{event.event_date}</td>
                                 <td>{event.type}</td>
                                 <td>{event.name}</td>
-                                <td>{event.is_active.toString()}</td>
+                                <td><img src={active} alt='' /></td>
                                 <td>
                                     <img src="../images/edit.png" alt="עריכה" />
                                     <a href="/" onClick={() => delEvent(event.created)}><img src="../images/delete.png" alt="מחיקה" /></a>

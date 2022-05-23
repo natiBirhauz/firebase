@@ -12,14 +12,14 @@ function NewEvent() {
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
 
-  const [user] = useAuthState(auth)
-  let username = ""
+  const [user] = useAuthState(auth);
+  let username = "";
 
   if (user)
-    username = user.displayName
+    username = user.displayName;
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await addDoc(collection(db, "events"), {
         name: username,
@@ -28,10 +28,11 @@ function NewEvent() {
         type: type,
         description: description,
         is_active: true,
-        created: Timestamp.now()
-      })
+        created: Timestamp.now(),
+        roles: { 'roles/1': 5 }
+      });
     } catch (err) {
-      alert(err)
+      alert(err);
     }
     navigate("/");
   }
