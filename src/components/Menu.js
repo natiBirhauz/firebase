@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import AdminPer from "./AdminPer";
-import "./components/layout/menu.css";
+import "./layout/menu.css";
 
 const Menu = () => {
 
@@ -20,7 +20,7 @@ const Menu = () => {
                     <Link to="/" className="menu__action">אירועים קרובים</Link>
                     <Link to="/" className="menu__action">עדכונים</Link>
                     <Link to="/register" className="menu__action">צור משתמש חדש</Link>
-                    <Link to="/" className="menu__action">דשבורד</Link>
+                    <Link to="/dashboard" className="menu__action">דשבורד</Link>
                 </div>
             </div>
         </div>

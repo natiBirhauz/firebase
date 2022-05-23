@@ -7,11 +7,11 @@ function AdminDashboard() {
     return (
         <div>
             <Header />
-            <AdminPer />
+            <AdminPer url="/dashboard" />
+            <br />
             <div className="box container main">
                 <h1 className="main__title title container">דשבורד</h1>
             </div>
-
             <div className="container row">
                 <div className="container box box--sub">
                     <section className="packages container">
@@ -22,7 +22,7 @@ function AdminDashboard() {
                                 <p>משלוחים בטיפול:</p>
                                 <p>משלוחים שטופלו:</p>
                             </div>
-                            <div className="packages__percentage percentage col">
+                            <div className="packages__percentage percentage">
                                 50%
                             </div>
                         </div>
@@ -37,7 +37,7 @@ function AdminDashboard() {
                                 <p>קריאות בטיפול: 5</p>
                                 <p>קריאות שטופלו: 5</p>
                             </div>
-                            <div className="calls__percentage percentage col">
+                            <div className="calls__percentage percentage">
                                 50%
                             </div>
                         </div>

@@ -7,9 +7,9 @@ import NewEvent from "../NewEvent"
 import Users from "../Users"
 import Events from "../Events";
 import Register from "../Register";
+import Reset from "../Reset";
 
 // import NewDelivery from "../NewDelivery"
-// import Reset from "../Reset";
 // import UserDashboard from "../UserDashboard";
 
 const Routing = () => {
@@ -18,8 +18,9 @@ const Routing = () => {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/reset" element={<Reset />} />
                 <Route path="/menu" element={<Menu />} />
-                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/dashboard" element={<AdminDashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/newevent" element={<NewEvent />} />
                 <Route path="/users" element={<Users />} />
@@ -27,7 +28,7 @@ const Routing = () => {
                 <Route path="/register" element={<Register />} />
                 {/*<Route path="/newdelivery" element={<NewDelivery />} />
                 <Route path="/dashboard" element={<UserDashboard />} />
-                <Route path="/reset" element={<Reset />} />
+                
                 */}
             </Routes>
         </Router>

@@ -1,7 +1,7 @@
 import { logout } from "./Firebase";
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.jpg'
-import "./components/layout/header.css";
+import "./layout/header.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 

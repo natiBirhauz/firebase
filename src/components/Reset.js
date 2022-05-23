@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendPasswordReset } from './Firebase';
-import '../components/layout/Login.css';
+import Header from './Header';
 
 function Reset() {
     const [email, setEmail] = useState('');
@@ -29,11 +29,19 @@ function Reset() {
 
     return (
         <div>
-            <h1>שכחתי סיסמה</h1>
-            <input id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
-            <p id='err' className='err'></p>
+            <Header />
             <br />
-            <button className='btn-login' onClick={sendPassword}>שלח</button>
+            <div className="box container">
+                <h1 className="user-details__title title container">רישום מתנדב חדש</h1>
+            </div>
+            <br />
+            <div className="box container">
+                <h1>שכחתי סיסמה</h1>
+                <input id='email' type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='כתובת אימייל' required />
+                <p id='err' className='err'></p>
+                <br />
+                <button className='btn-login' onClick={sendPassword}>שלח</button>
+            </div>
         </div>
     );
 }
