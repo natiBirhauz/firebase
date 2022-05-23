@@ -20,7 +20,7 @@ function Events() {
     useEffect(() => {
         const getEvents = async () => {
             const data = await getDocs(eventsCollectionRef);
-            setEvents(data.docs.map((doc) => (doc.data)));
+            setEvents(data.docs.map((doc) => (doc.data())));
         }
         getEvents();
     });
@@ -47,7 +47,7 @@ function Events() {
                                 <td>{event.event_date}</td>
                                 <td>{event.type}</td>
                                 <td>{event.name}</td>
-                                <td>{event.is_active.toString()}</td>
+                                <td>{event.is_active}</td>
                                 <td>
                                     <img src="../images/edit.png" alt="עריכה" />
                                     <a href="/" onClick={() => delEvent(event.created)}><img src="../images/delete.png" alt="מחיקה" /></a>
