@@ -5,6 +5,7 @@ import { db } from "./Firebase";
 import Header from "./Header";
 import AdminPer from "./AdminPer";
 import "./layout/roles.css"
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const email = useRef("");
@@ -13,6 +14,7 @@ function Register() {
     const tel = useRef("");
     const [cats, setCats] = useState([]);
     let userStringsRoles = [];
+    const navigate = useNavigate();
 
     const userRoles = (userRole) => {
         if (!userStringsRoles.includes(userRole))
@@ -57,7 +59,7 @@ function Register() {
         let errOccured = false;
 
         try {
-            registerWithEmailAndPassword(fullName.current, email.current, password.current, gender.current, tel.current, userStringsRoles);
+            registerWithEmailAndPassword(fullName.current.value, email.current.value, password, gender.current.value, tel.current.value, userStringsRoles);
         } catch (e) {
             errOccured = true;
             err.style.color = 'red';
@@ -67,6 +69,7 @@ function Register() {
             if (!errOccured) {
                 err.style.color = 'green';
                 err.innerText = fullName.current.value + ' נרשם בהצלחה ✓';
+                setTimeout(() => navigate('/menu'), 1000);
             }
         }
     };
