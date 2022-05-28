@@ -57,7 +57,7 @@ function Register() {
         let errOccured = false;
 
         try {
-            registerWithEmailAndPassword(fullName, email, password, gender, tel, userStringsRoles);
+            registerWithEmailAndPassword(fullName.current, email.current, password.current, gender.current, tel.current, userStringsRoles);
         } catch (e) {
             errOccured = true;
             err.style.color = 'red';
