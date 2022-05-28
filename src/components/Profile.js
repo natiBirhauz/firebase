@@ -1,35 +1,41 @@
 import { getAuth, updateProfile, updateEmail, updatePassword } from 'firebase/auth'
-import { collection, getDocs, updateDoc } from 'firebase/firestore';
-import { useState } from 'react';
+import { collection, getDocs, updateDoc, query, where } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import { db } from "./Firebase";
 import Header from './Header';
 import AdminPer from './AdminPer';
 import '../components/layout/profile.css';
 
 function Profile() {
-    const [name, setName] = useState();
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [ssn, setSSN] = useState('');
     const [phone, setPhone] = useState('');
-    const navigate = useNavigate();
+    const [roles, setRoles] = useState('');
     const user = getAuth();
-    var failed = false;
+    let failed = false;
+    let refUser = '', querySnapshot = '';
 
-    onAuthStateChanged(user, () => {
-        if (user.currentUser) {
-            setName(user.currentUser.displayName);
-            setEmail(user.currentUser.email);
-        }
-    });
+    useEffect(() => {
+        onAuthStateChanged(user, () => {
+            if (user.currentUser) {
+                setName(user.currentUser.displayName);
+                setEmail(user.currentUser.email);
+                refUser = query(collection(db, "users"), where("uid", "==", user.currentUser.uid));
+                getRoles();
+            }
+        });
+    }, [user]);
 
     const loginAndUpdate = event => {
         event.preventDefault();
         try {
             updateProfile(user.currentUser, { displayName: name });
             updateEmail(user.currentUser, email);
-            updatePassword(user.currentUser, password);
+            if (password !== '')
+                updatePassword(user.currentUser, password);
         } catch (e) {
             if (e.code === 'auth/invalid-email')
                 console.log("הכנס כתובת מייל תקינה")
@@ -44,16 +50,45 @@ function Profile() {
                 getDocs(collection(db, "users")).then((data) => {
                     data.forEach((doc) => {
                         if (doc.data().uid === user.currentUser.uid) {
-                            updateDoc(doc.ref, { 'name': name, 'email': email, 'phoneNumber': phone, 'password': password });
+                            if (password !== '')
+                                updateDoc(doc.ref, { 'name': name, 'email': email, 'phoneNumber': phone, 'password': password });
+                            else
+                                updateDoc(doc.ref, { 'name': name, 'email': email, 'phoneNumber': phone });
+
                         }
                     });
                 });
                 alert("הפרטים שונו בהצלחה");
-                setTimeout(() => navigate('/'), 500);
             }
         }
     }
 
+    const getRoles = async () => {
+        let categories = [];
+        getDocs(collection(db, "roles")).then((data) => {
+            data.forEach((doc) => {
+                categories.push(doc.data());
+            });
+        });
+
+        querySnapshot = await getDocs(refUser);
+        querySnapshot.forEach((doc) => {
+            const myroles = doc.data().roles;
+            setPhone(doc.data().phoneNumber);
+            setSSN(doc.data().ssn);
+
+            let cat = 0, role = 0;
+            for (let i = 0; i < myroles.length; i++) {
+                cat = parseInt(myroles[i][0]);
+                role = parseInt(myroles[i][2]);
+                setRoles((roles) => roles + "<li>" + categories[cat][role] + "</li>");
+            }
+        });
+        window.onload = await function () {
+            document.getElementById('myroles').innerHTML = roles;
+        }
+    }
+    
     return (
         <div className="user-details">
             <Header />
@@ -66,40 +101,42 @@ function Profile() {
                 <div className="box box--sub col">
                     <div className="user-details__profile container">
                         <h2 className="user-details__profile__title">פרופיל</h2>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">שם מלא:</p>
-                            <p className="property--value">{name}</p>
-                        </div>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">אימייל:</p>
-                            <p className="property--value">{email}</p>
-                        </div>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">טלפון:</p>
-                            <p className="property--value">{null}</p>
-                        </div>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">תאריך לידה:</p>
-                            <p className="property--value"></p>
-                        </div>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">עיר:</p>
-                            <p className="property--value"></p>
-                        </div>
-                        <div className="user-details__profile__item spaced">
-                            <p className="property">תעודת זהות:</p>
-                            <p className="property--value"></p>
-                        </div>
-                        <button className="btn--accent">ערוך</button>
+                        <form onSubmit={loginAndUpdate}>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">שם מלא:</p>
+                                <input className="property--value input" value={name} onChange={e => setName(e.target.value)} />
+                            </div>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">אימייל:</p>
+                                <input className="property--value input" value={email} onChange={e => setEmail(e.target.value)} />
+                            </div>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">טלפון:</p>
+                                <input type="tel" className="property--value input" value={phone} onChange={e => setPhone(e.target.value)} />
+                            </div>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">עיר:</p>
+                                <p className="property--value"></p>
+                            </div>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">תעודת זהות:</p>
+                                <input className="property--value input" value={ssn} readOnly />
+                            </div>
+                            <div className="user-details__profile__item spaced">
+                                <p className="property">סיסמה:</p>
+                                <input type="password" className="property--value input" placeholder='הכנס סיסמה חדשה' onChange={e => setPassword(e.target.value)} />
+                            </div>
+                            <button className="btn--accent">שמירה</button>
+                        </form>
                     </div>
                 </div>
                 <div className="box box--sub">
                     <div className="user-details__roles container">
                         <h2 className="user-details__roles__title">רשימת תפקידים</h2>
-                        <ol className="user-details__roles__list">
-                            <li>ספק מזון</li>
+                        <ol className="user-details__roles__list" id="myroles">
+                            <div dangerouslySetInnerHTML={{ __html: roles }} />
                         </ol>
-                        <button className="btn--accent">ערוך</button>
+                        <button className="btn--accent" type="submit">עריכה</button>
                     </div>
                 </div>
             </div>

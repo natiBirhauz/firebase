@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import logo from '../assets/logo.jpg'
 import "./layout/header.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Header() {
     const user = getAuth();
     let [username, setUsername] = useState('');
 
-    onAuthStateChanged(user, () => {
-        if (user.currentUser)
-            setUsername(user.currentUser.displayName);
-    })
+    useEffect(() => {
+        onAuthStateChanged(user, () => {
+            if (user.currentUser)
+                setUsername(user.currentUser.displayName);
+        })
+    }, [user]);
 
     return (
         <header>
@@ -22,6 +24,10 @@ function Header() {
                         <span className="hamburger"></span>
                     </button>
                 </div>
+                <ul className="nav__list nav__list--secondary">
+                    <h1 className="main__title"><li className="nav__item">ברוך הבא, {username}</li></h1>
+                    <li className="nav__item"><Link className="nav--btn btn--accent" to="/login" onClick={() => { logout() }}>התנתק</Link></li>
+                </ul>
                 <nav className="nav">
                     <a href="#">
                         <img src={logo} alt="אמיצים" className="header__logo logo--small" />
@@ -33,10 +39,6 @@ function Header() {
                         <li className="nav__item"><Link to="/" className="nav__link">קריאות</Link></li>
                         <li className="nav__item"><Link to="/events" className="nav__link">אירועים</Link></li>
                         <li className="nav__item"><Link to="/" className="nav__link">משלוחים</Link></li>
-                    </ul>
-                    <ul className="nav__list nav__list--secondary">
-                        <h1 className="main__title"><li className="nav__item">ברוך הבא, {username}</li></h1>
-                        <li className="nav__item"><Link className="nav--btn btn--accent" to="/login" onClick={() => { logout() }}>התנתק</Link></li>
                     </ul>
                 </nav>
                 <br /><br />

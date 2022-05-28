@@ -1,0 +1,12 @@
+#rolesList {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+}
+
+.category {
+    flex: 1;
+    border: 2px solid var(--clr-neutral-500);
+    border-radius: 20px;
+    padding: 5px;
+}

@@ -1,6 +1,6 @@
 import AdminPer from "./AdminPer"
 import Header from "./Header"
-import "./components/layout/dashboard.css";
+import "./layout/dashboard.css";
 
 function AdminDashboard() {
 

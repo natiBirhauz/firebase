@@ -7,7 +7,7 @@ import AdminPer from "./AdminPer";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    var errOccured = false;
+    let errOccured = false;
 
     const login = event => {
         event.preventDefault();

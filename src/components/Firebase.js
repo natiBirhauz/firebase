@@ -23,11 +23,11 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 
-const registerWithEmailAndPassword = async (name, email, password, gender, tel) => {
-  const adminUser = auth.currentUser
+const registerWithEmailAndPassword = async (name, email, password, gender, tel, userRoles) => {
+  const adminUser = auth.currentUser;
 
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, password, gender);
+    const res = await createUserWithEmailAndPassword(auth, email, password);
 
     // Update profile name
     updateProfile(res.user, {
@@ -44,12 +44,13 @@ const registerWithEmailAndPassword = async (name, email, password, gender, tel) 
         tel,
         isAdmin: false,
         isActive: true,
+        roles: userRoles,
       });
     });
   } catch (err) {
-    console.error(err);
+    throw err;
   }
-  sendPasswordReset(email);
+  //sendPasswordReset(email);
   auth.updateCurrentUser(adminUser)
 };
 
@@ -66,7 +67,7 @@ const logout = () => {
     signOut(auth);
   }
   catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
