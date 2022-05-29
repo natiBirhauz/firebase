@@ -3,7 +3,7 @@ import { db } from "./Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import yes from '../assets/yes.png';
 import no from '../assets/no.png';
-import "./Users.css"
+import '../components/layout/profile.css';
 import Header from "./Header";
 import AdminPer from "./AdminPer";
 

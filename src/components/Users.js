@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './Firebase';
-import { collection, getDoc, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import yes from '../assets/yes.png';
 import no from '../assets/no.png';
-import './Users.css';
+import '../components/layout/Users.css';
 import Header from './Header';
 import AdminPer from './AdminPer';
-let arr = [];
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -37,34 +36,29 @@ function Users() {
                             <td>שם</td>
                             <td>מייל</td>
                             <td>מין</td>
-                            <td>תפקידים</td>
+                            <td>פלאפון</td>
+                            <td>ת"ז</td>
                             <td>מצב</td>
+                            <td>הרשאות מנהל</td>
                             <td>פעולות</td>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user) => {
-                            let active;
+                            let active, admin;
                             user.isActive ? active = yes : active = no;
-                            if (user.roles.length > 0) {
-                                user.roles.forEach(role => {
-                                    getDoc(role).then((r) => {
-                                        if (!arr.includes(r.data().role)) {
-                                            arr.push(r.data().role);
-                                        }
-                                    });
-                                });
-                            }
-                            console.log(arr)
+                            user.isAdmin ? admin = yes : admin = no;
                             return (
                                 <tr key={user.uid}>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.gender}</td>
-                                    <td>{arr}</td>
+                                    <td>{user.tel}</td>
+                                    <td>{user.ssn}</td>
                                     <td><img src={active} alt="" /></td>
+                                    <td><img src={admin} alt="" /></td>
                                     <td>
-                                        <a onClick={() => editUser(user.uid)}><img src="../images/edit.png" alt="עריכה" /></a>
+                                        <a href="/#" onClick={() => editUser(user.uid)}><img src="../images/edit.png" alt="עריכה" /></a>
                                     </td>
                                 </tr>
                             )

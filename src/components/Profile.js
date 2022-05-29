@@ -12,6 +12,7 @@ function Profile() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [ssn, setSSN] = useState('');
+    const [city, setCity] = useState('');
     const [phone, setPhone] = useState('');
     const [roles, setRoles] = useState('');
     const user = getAuth();
@@ -74,7 +75,8 @@ function Profile() {
         querySnapshot = await getDocs(refUser);
         querySnapshot.forEach((doc) => {
             const myroles = doc.data().roles;
-            setPhone(doc.data().phoneNumber);
+            setPhone(doc.data().tel);
+            setCity(doc.data().city)
             setSSN(doc.data().ssn);
 
             let cat = 0, role = 0;
@@ -88,7 +90,7 @@ function Profile() {
             document.getElementById('myroles').innerHTML = roles;
         }
     }
-    
+
     return (
         <div className="user-details">
             <Header />
@@ -116,7 +118,7 @@ function Profile() {
                             </div>
                             <div className="user-details__profile__item spaced">
                                 <p className="property">עיר:</p>
-                                <p className="property--value"></p>
+                                <input className="property--value input" value={city} readOnly />
                             </div>
                             <div className="user-details__profile__item spaced">
                                 <p className="property">תעודת זהות:</p>

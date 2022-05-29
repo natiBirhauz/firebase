@@ -16,11 +16,12 @@ const Menu = () => {
                     <Link to="/users" className="menu__action">רשימת מתנדבים</Link>
                     <Link to="/" className="menu__action">רשימת מוטבים</Link>
                     <Link to="/newevent" className="menu__action">צור אירוע חדש</Link>
-                    <Link to="/" className="menu__action">צור משלוח חדש</Link>
-                    <Link to="/" className="menu__action">אירועים קרובים</Link>
-                    <Link to="/" className="menu__action">עדכונים</Link>
+                    {/* <Link to="/" className="menu__action">צור משלוח חדש</Link> */}
+                    <Link to="/menu" className="menu__action">אירועים קרובים</Link>
+                    <Link to="/menu" className="menu__action">עדכונים</Link>
                     <Link to="/register" className="menu__action">צור משתמש חדש</Link>
                     <Link to="/dashboard" className="menu__action">דשבורד</Link>
+                    <a href="https://www.amitsim.org/" className="menu__action" target="_blank" rel="noopener noreferrer">מעבר לאתר הארגון</a>
                 </div>
             </div>
         </div>

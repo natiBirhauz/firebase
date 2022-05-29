@@ -12,18 +12,14 @@ function NewEvent() {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
-
   const [user] = useAuthState(auth)
-  let username = ""
 
-  if (user)
-    username = user.displayName
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await addDoc(collection(db, "events"), {
-        name: username,
+        name: user.displayName,
         event_name: title,
         event_date: date,
         type: type,
@@ -48,7 +44,6 @@ function NewEvent() {
       <div className="container row">
         <div className="box box--sub col">
           <form onSubmit={handleSubmit}>
-            <p><label>שם יוצר האירוע: </label><input type="text" name="name" value={username} readOnly /></p>
             <p><label>כותרת האירוע: </label><input type="text" name="title"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
