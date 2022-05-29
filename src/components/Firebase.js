@@ -32,7 +32,7 @@ const registerWithEmailAndPassword = async (name, email, password, gender, tel, 
     updateProfile(res.user, {
       displayName: name
     }).then(() => {
-      console.log(`User ${res.user.displayName} (UID: ${res.user.uid}) created`)
+      //console.log(`User ${res.user.displayName} (UID: ${res.user.uid}) created`)
 
       addDoc(collection(db, "users"), {
         uid: res.user.uid,

@@ -17,7 +17,7 @@ const Menu = () => {
                     <Link to="/" className="menu__action">רשימת מוטבים</Link>
                     <Link to="/newevent" className="menu__action">צור אירוע חדש</Link>
                     {/* <Link to="/" className="menu__action">צור משלוח חדש</Link> */}
-                    <Link to="/menu" className="menu__action">אירועים קרובים</Link>
+                    <Link to="/events" className="menu__action">אירועים קרובים</Link>
                     <Link to="/menu" className="menu__action">עדכונים</Link>
                     <Link to="/register" className="menu__action">צור משתמש חדש</Link>
                     <Link to="/dashboard" className="menu__action">דשבורד</Link>

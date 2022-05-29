@@ -9,7 +9,7 @@ import AdminPer from "./AdminPer";
 
 function Events() {
     const [events, setEvents] = useState([]);
-    const eventsCollectionRef = collection(db, "event");
+    const eventsCollectionRef = collection(db, "events");
 
     const delEvent = (created) => {
         //     console.log(events.find((doc) => (doc.created === created)));
@@ -41,6 +41,7 @@ function Events() {
                 <table className="fl-table">
                     <thead>
                         <tr>
+                            <td>ID</td>
                             <td>שם האירוע</td>
                             <td>תאריך</td>
                             <td>סוג</td>
@@ -55,6 +56,7 @@ function Events() {
                             event.is_active ? active = yes : active = no;
                             return (
                                 <tr key={event.created}>
+                                    <td>{event.id}</td>
                                     <td>{event.event_name}</td>
                                     <td>{event.event_date}</td>
                                     <td>{event.type}</td>

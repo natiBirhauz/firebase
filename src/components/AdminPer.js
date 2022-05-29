@@ -19,7 +19,7 @@ const AdminPer = (props) => {
                 getDocs(collection(db, "users")).then((data) => {
                     data.forEach((doc) => {
                         if (!isAdmin && user && user.uid === doc.data().uid && doc.data().isAdmin && doc.data().isActive) {
-                            console.log('Logged in as administrator (', doc.data().name, ')');
+                            //console.log('Logged in as administrator (', doc.data().name, ')');
                             isAdmin = true;
                             navigate(url);
                         }

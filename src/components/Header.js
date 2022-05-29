@@ -35,10 +35,10 @@ function Header() {
                     <ul className="nav__list nav__list--primary">
                         <li className="nav__item"><Link to="/menu" className="nav__link">ראשי</Link></li>
                         <li className="nav__item"><Link to="/profile" className="nav__link">פרופיל</Link></li>
-                        <li className="nav__item"><Link to="/" className="nav__link">עדכונים</Link></li>
-                        <li className="nav__item"><Link to="/" className="nav__link">קריאות</Link></li>
+                        <li className="nav__item"><Link to="/menu" className="nav__link">עדכונים</Link></li>
+                        <li className="nav__item"><Link to="/menu" className="nav__link">קריאות</Link></li>
                         <li className="nav__item"><Link to="/events" className="nav__link">אירועים</Link></li>
-                        <li className="nav__item"><Link to="/" className="nav__link">משלוחים</Link></li>
+                        <li className="nav__item"><Link to="/menu" className="nav__link">משלוחים</Link></li>
                     </ul>
                 </nav>
                 <br /><br />
