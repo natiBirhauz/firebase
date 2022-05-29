@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db } from "./Firebase";
 import Header from './Header';
-import AdminPer from './AdminPer';
+// import AdminPer from './AdminPer';
 import '../components/layout/profile.css';
 
 function Profile() {
@@ -94,7 +94,7 @@ function Profile() {
     return (
         <div className="user-details">
             <Header />
-            <AdminPer url="/profile" />
+            {/* <AdminPer url="/profile" /> */}
             <br />
             <div className="box container">
                 <h1 className="user-details__title title container">פרטי משתמש</h1>

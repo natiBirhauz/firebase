@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes,  } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes, } from "react-router-dom"
 import Login from "../Login";
 import AdminDashboard from "../AdminDashboard";
 import Menu from "../Menu"
@@ -8,6 +8,7 @@ import Users from "../Users"
 import Events from "../Events";
 import Register from "../Register";
 import Reset from "../Reset";
+import UserDashboard from "../UserDashboard";
 
 // import NewDelivery from "../NewDelivery"
 // import UserDashboard from "../UserDashboard";
@@ -26,6 +27,7 @@ const Routing = () => {
                 <Route path="/users" element={<Users />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/userdash" element={<UserDashboard />} />
                 {/*<Route path="/newdelivery" element={<NewDelivery />} />
                 <Route path="/dashboard" element={<UserDashboard />} />
                 

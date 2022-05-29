@@ -29,7 +29,7 @@ function Header() {
                     <li className="nav__item"><Link className="nav--btn btn--accent" to="/login" onClick={() => { logout() }}>התנתק</Link></li>
                 </ul>
                 <nav className="nav">
-                    <a href="#">
+                    <a href="/menu">
                         <img src={logo} alt="אמיצים" className="header__logo logo--small" />
                     </a>
                     <ul className="nav__list nav__list--primary">

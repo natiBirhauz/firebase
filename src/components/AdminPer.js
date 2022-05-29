@@ -31,7 +31,7 @@ const AdminPer = (props) => {
                         }
                     });
                     if (user && isAdmin === false)
-                        navigate('/dashboard');
+                        navigate('/userdash');
                 });
             } else {
                 navigate('/login');
