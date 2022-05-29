@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import yes from '../assets/yes.png';
 import no from '../assets/no.png';
 import '../components/layout/profile.css';
@@ -23,7 +23,7 @@ function Events() {
 
     useEffect(() => {
         const getEvents = async () => {
-            const data = await getDocs(eventsCollectionRef);
+            const data = await getDocs(query(eventsCollectionRef, orderBy('id')));
             setEvents(data.docs.map((doc) => (doc.data())));
         }
         getEvents();
@@ -32,10 +32,9 @@ function Events() {
     return (
         <div>
             <Header />
-            <AdminPer url="/events" />
             <br />
             <div className="box container">
-                <h1 className="user-details__title title container">רשימת אירועים</h1>
+                <h1 className="user-details__title title container">אירועים קרובים</h1>
             </div>
             <div className="table-wrapper box container">
                 <table className="fl-table">
