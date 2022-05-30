@@ -26,7 +26,7 @@ function Register() {
     const showCats = cats.map((subcat, indexCat) => {
         return (
             <div className='category' key={indexCat}>
-                <h3>Category {indexCat}</h3>
+                <h3>קטגוריה {indexCat + 1}</h3>
                 {subcat.map((role, indexRole) => {
                     return (
                         <div key={indexRole}>

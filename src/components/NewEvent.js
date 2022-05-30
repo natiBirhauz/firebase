@@ -1,36 +1,77 @@
 import { db, auth } from "./Firebase"
-import { collection, addDoc, Timestamp } from "firebase/firestore"
-import { useState } from "react";
+import { collection, addDoc, Timestamp, getDocs } from "firebase/firestore"
+import { useRef, useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import AdminPer from './AdminPer'
 import Header from "./Header";
-function NewEvent() {
 
+const NewEvent = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const title = useRef("");
+  const description = useRef("");
+  const date = useRef("");
+  const [cats, setCats] = useState([]);
   const [type, setType] = useState("");
-  const [date, setDate] = useState("");
-  const [user] = useAuthState(auth)
+  const [user] = useAuthState(auth);
+  const [eventStringsRoles, setEventStringsRoles] = useState([]);
 
+  useEffect(() => {
+    const getRoles = async () => {
+      setCats([]);
+      const data = await getDocs(collection(db, 'roles'));
+      data.forEach((e) => {
+        const subarr = Object.values(e.data());
+        setCats(cats => [...cats, subarr]);
+      });
+    }
+    getRoles();
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const chooseAmount = (role) => {
+    let amount;
+    if (role.target.checked === true)
+      amount = prompt("נבחר תפקיד " + cats[role.target.id.charAt(0)][role.target.value] + ". הכנס כמות נדרשת:");
+    if (amount <= 0) {
+      alert("לפחות 1");
+      role.target.checked = false;
+      return;
+    }
+    setEventStringsRoles(eventStringsRoles => [...eventStringsRoles, role.target.id + "-" + amount])
+  }
+
+  const showCats = cats.map((subcat, indexCat) => {
+    return (
+      <div key={indexCat}>
+        <h3>קטגוריה {indexCat + 1}</h3>
+        {subcat.map((role, indexRole) => {
+          return (
+            <div key={indexRole}>
+              <input type="checkbox" value={indexRole} id={`${indexCat}-${indexRole}`} onChange={(e) => chooseAmount(e)} />
+              <label htmlFor={`${indexCat}-${indexRole}`}>{role}</label>
+            </div>
+          )
+        })}
+      </div>
+    )
+  })
+
+  const addEvent = async (e) => {
     e.preventDefault()
     try {
       await addDoc(collection(db, "events"), {
         name: user.displayName,
-        event_name: title,
-        event_date: date,
+        event_name: title.current.value,
+        event_date: date.current.value,
         type: type,
-        description: description,
+        description: description.current.value,
         is_active: true,
+        roles: eventStringsRoles,
         created: Timestamp.now()
       })
     } catch (err) {
       alert(err)
     }
-    navigate("/");
   }
 
   return (
@@ -43,12 +84,9 @@ function NewEvent() {
       </div>
       <div className="container row">
         <div className="box box--sub col">
-          <form onSubmit={handleSubmit}>
-            <p><label>כותרת האירוע: </label><input type="text" name="title"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              placeholder="" required /></p>
-            <p><label>תאריך: </label><input type="date" onChange={(e) => setDate(e.target.value)} required /></p>
+          <form onSubmit={addEvent}>
+            <p><label>כותרת האירוע: </label><input ref={title} type="text" name="title" required /></p>
+            <p><label>תאריך: </label><input ref={date} type="date" required /></p>
             <p>
               <label>סוג אירוע: </label>
               <select onChange={(e) => setType(e.target.value)} required>
@@ -57,17 +95,21 @@ function NewEvent() {
               </select>
             </p>
 
-            <p><label>פירוט: </label><textarea rows="5" cols="30"
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder=""></textarea></p>
-            <p><button className="btn-add" type="submit">הוסף אירוע</button></p>
+            <p><label>פירוט: </label><textarea ref={description} rows="5" cols="30" /></p>
+            {showCats}
+            <p><button className="btn--accent" type="submit">הוסף אירוע</button></p>
           </form>
-        </div >
+        </div>
         <div className="box box--sub">
           <div className="user-details__roles container">
             <h2 className="user-details__roles__title">רשימת תפקידים</h2>
             <ol className="user-details__roles__list">
-              <li>ספק מזון</li>
+              {eventStringsRoles.map((role) => {
+                const nums = role.split('-');
+                return (
+                  <li key={role}>{cats[nums[0]][nums[1]]}, כמות: {nums[2]}</li>
+                )
+              })}
             </ol>
             <button className="btn--accent">ערוך</button>
           </div>

@@ -30,6 +30,8 @@ function Events() {
         getEvents();
     }, []);
 
+
+
     return (
         <div>
             <Header />
