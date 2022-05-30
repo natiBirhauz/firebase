@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./Firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, deleteDoc, doc } from "firebase/firestore";
 import yes from '../assets/yes.png';
 import no from '../assets/no.png';
 import '../components/layout/profile.css';
@@ -11,27 +11,29 @@ function Events() {
     const [events, setEvents] = useState([]);
     const eventsCollectionRef = collection(db, "events");
 
-    const delEvent = (created) => {
-        //     console.log(events.find((doc) => (doc.created === created)));
-        //     // setEvents(getDocs(eventsCollectionRef));.then((querySnapshot) => {
-        //     //     querySnapshot.forEach((doc) => {
-
-        //     //         console.log(doc.id, " => ", doc.data())
-        //     //    })
-        //     //})
+    const delEvent = async (id) => {
+        let errOccurred = false;
+        await deleteDoc(doc(db, "events", id)).catch((e) => {
+            errOccurred = true;
+            alert("אירעה שגיאה, נסה שנית");
+        }).finally(() => {
+            if (!errOccurred)
+                window.location.reload();
+        });
     }
 
     useEffect(() => {
         const getEvents = async () => {
             const data = await getDocs(query(eventsCollectionRef, orderBy('id')));
-            setEvents(data.docs.map((doc) => (doc.data())));
+            setEvents(data.docs.map((doc) => ({ ...doc.data(), uid: doc.id })));
         }
         getEvents();
-    });
+    }, []);
 
     return (
         <div>
             <Header />
+            <AdminPer url="/events" />
             <br />
             <div className="box container">
                 <h1 className="user-details__title title container">אירועים קרובים</h1>
@@ -51,19 +53,23 @@ function Events() {
                     </thead>
                     <tbody>
                         {events.map((event) => {
-                            let active;
+                            let active, toggle;
+                            event.is_active ? active = yes : active = no;
+                            event.is_active ? toggle = 'השבת' : toggle = 'הפעל';
                             event.is_active ? active = yes : active = no;
                             return (
-                                <tr key={event.created}>
+                                <tr key={event.uid}>
                                     <td>{event.id}</td>
                                     <td>{event.event_name}</td>
                                     <td>{event.event_date}</td>
                                     <td>{event.type}</td>
                                     <td>{event.name}</td>
-                                    <td><img src={active} alt='' /></td>
+                                    <td>
+                                        <img src={active} alt='' />
+                                    </td>
                                     <td>
                                         <img src="../images/edit.png" alt="עריכה" />
-                                        <a href="/events"><img src="../images/delete.png" alt="מחיקה" /></a>
+                                        <a onClick={() => delEvent(event.uid)} href="#"><img src="../images/delete.png" alt="מחיקה" /></a>
                                     </td>
                                 </tr>
                             )

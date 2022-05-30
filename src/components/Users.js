@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './Firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, updateDoc } from 'firebase/firestore';
 import yes from '../assets/yes.png';
 import no from '../assets/no.png';
 import '../components/layout/Users.css';
@@ -9,8 +9,29 @@ import AdminPer from './AdminPer';
 
 function Users() {
     const [users, setUsers] = useState([]);
+
     const editUser = (uid) => {
         console.log(uid);
+    }
+
+
+    const deActive = (uid) => {
+        // Update also in users collection
+        getDocs(collection(db, "users")).then((data) => {
+            data.forEach((doc) => {
+                if (doc.data().uid === uid) {
+                    let active, errOccurred;
+                    doc.data().isActive ? active = false : active = true;
+                    updateDoc(doc.ref, { 'isActive': active }).catch((e) => {
+                        errOccurred = true;
+                        alert("אירעה שגיאה, נסה שנית");
+                    }).finally(() => {
+                        if (!errOccurred)
+                            window.location.reload()
+                    });
+                }
+            });
+        })
     }
 
     useEffect(() => {
@@ -45,9 +66,11 @@ function Users() {
                     </thead>
                     <tbody>
                         {users.map((user) => {
-                            let active, admin;
+                            let active, admin, toggle;
                             user.isActive ? active = yes : active = no;
+                            user.isActive ? toggle = 'השבת' : toggle = 'הפעל';
                             user.isAdmin ? admin = yes : admin = no;
+
                             return (
                                 <tr key={user.uid}>
                                     <td>{user.name}</td>
@@ -55,10 +78,13 @@ function Users() {
                                     <td>{user.gender}</td>
                                     <td>{user.tel}</td>
                                     <td>{user.ssn}</td>
-                                    <td><img src={active} alt="" /></td>
+                                    <td>
+                                        <img src={active} alt="" />
+                                        <a onClick={() => deActive(user.uid)}><button className='btn-toggle'>{toggle}</button></a>
+                                    </td>
                                     <td><img src={admin} alt="" /></td>
                                     <td>
-                                        <a href="/#" onClick={() => editUser(user.uid)}><img src="../images/edit.png" alt="עריכה" /></a>
+                                        <a onClick={() => editUser(user.uid)}><img src="../images/edit.png" alt="עריכה" /></a>
                                     </td>
                                 </tr>
                             )

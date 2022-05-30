@@ -32,18 +32,20 @@ function Profile() {
 
     const loginAndUpdate = event => {
         event.preventDefault();
+        const err = document.getElementById('err');
         try {
             updateProfile(user.currentUser, { displayName: name });
             updateEmail(user.currentUser, email);
             if (password !== '')
                 updatePassword(user.currentUser, password);
+
         } catch (e) {
             if (e.code === 'auth/invalid-email')
-                console.log("הכנס כתובת מייל תקינה")
+                err.innerText = "הכנס כתובת מייל תקינה";
             else if (e.code === 'auth/requires-recent-login')
-                console.log("מטעמי בטיחות, יש להתנתק ולהתחבר מחדש על מנת לשנות את כתובת המייל")
+                err.innerText = "מטעמי בטיחות, יש להתנתק ולהתחבר מחדש על מנת לשנות את כתובת המייל";
             else
-                console.log(e);
+                err.innerText = e;
             failed = true;
         } finally {
             if (!failed) {
@@ -52,14 +54,16 @@ function Profile() {
                     data.forEach((doc) => {
                         if (doc.data().uid === user.currentUser.uid) {
                             if (password !== '')
-                                updateDoc(doc.ref, { 'name': name, 'email': email, 'phoneNumber': phone, 'password': password });
+                                updateDoc(doc.ref, { 'name': name, 'email': email, 'tel': phone, 'password': password });
                             else
-                                updateDoc(doc.ref, { 'name': name, 'email': email, 'phoneNumber': phone });
+                                updateDoc(doc.ref, { 'name': name, 'email': email, 'tel': phone });
 
                         }
                     });
                 });
-                alert("הפרטים שונו בהצלחה");
+                err.style.color = 'green';
+                err.innerText = 'פרטים עודכנו בהצלחה במערכת ✓';
+                setTimeout(() => window.location.href = "/menu", 2000);
             }
         }
     }
@@ -94,7 +98,6 @@ function Profile() {
     return (
         <div className="user-details">
             <Header />
-            {/* <AdminPer url="/profile" /> */}
             <br />
             <div className="box container">
                 <h1 className="user-details__title title container">פרטי משתמש</h1>
@@ -128,6 +131,7 @@ function Profile() {
                                 <p className="property">סיסמה:</p>
                                 <input type="password" className="property--value input" placeholder='הכנס סיסמה חדשה' onChange={e => setPassword(e.target.value)} />
                             </div>
+                            <p id="err"></p>
                             <button className="btn--accent">שמירה</button>
                         </form>
                     </div>
