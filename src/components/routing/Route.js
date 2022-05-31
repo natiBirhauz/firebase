@@ -9,22 +9,22 @@ import Events from "../Events";
 import Register from "../Register";
 import Reset from "../Reset";
 import UserDashboard from "../UserDashboard";
-import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+// import { getAuth } from "firebase/auth";
+// import { useEffect, useState } from "react";
 // import NewDelivery from "../NewDelivery"
 // import UserDashboard from "../UserDashboard";
 
 
 
 const Routing = () => {
-    const pathname = window.location.pathname;
-    const [path, setPath] = useState(pathname);
-    const user = getAuth();
+    // const pathname = window.location.pathname;
+    // const [path, setPath] = useState(pathname);
+    // const user = getAuth();
 
-    useEffect(() => {
-        path === "/login" && setPath("/");
-        path !== "/" && path !== "/dashboard" && setPath("/");
-    }, [user.currentUser]);
+    // useEffect(() => {
+    //     path === "/login" && setPath("/");
+    //     path !== "/" && path !== "/dashboard" && setPath("/");
+    // }, [user.currentUser]);
 
     return (
         <Router>
