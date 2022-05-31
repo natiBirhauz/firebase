@@ -24,7 +24,7 @@ function Events() {
 
     useEffect(() => {
         const getEvents = async () => {
-            const data = await getDocs(query(eventsCollectionRef, orderBy('id')));
+            const data = await getDocs(query(eventsCollectionRef, orderBy('event_date')));
             setEvents(data.docs.map((doc) => ({ ...doc.data(), uid: doc.id })));
         }
         getEvents();
@@ -44,7 +44,6 @@ function Events() {
                 <table className="fl-table">
                     <thead>
                         <tr>
-                            <td>ID</td>
                             <td>שם האירוע</td>
                             <td>תאריך</td>
                             <td>סוג</td>
@@ -61,9 +60,8 @@ function Events() {
                             event.is_active ? active = yes : active = no;
                             return (
                                 <tr key={event.uid}>
-                                    <td>{event.id}</td>
                                     <td>{event.event_name}</td>
-                                    <td>{event.event_date}</td>
+                                    <td>{new Date(event.event_date.seconds * 1000).toLocaleDateString()}</td>
                                     <td>{event.type}</td>
                                     <td>{event.name}</td>
                                     <td>
@@ -83,4 +81,4 @@ function Events() {
     );
 }
 
-export default Events;
+export default Events; 

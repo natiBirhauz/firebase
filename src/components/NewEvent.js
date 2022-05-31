@@ -32,11 +32,22 @@ const NewEvent = () => {
     let amount;
     if (role.target.checked === true)
       amount = prompt("נבחר תפקיד " + cats[role.target.id.charAt(0)][role.target.value] + ". הכנס כמות נדרשת:");
+    else {
+      setEventStringsRoles(eventStringsRoles.filter((roleInList) => {
+        const arr = roleInList.split('-');
+        const roleStr = arr[0] + '-' + arr[1];
+        return roleStr !== role.target.id;
+      }
+      ));
+      return;
+    }
+
     if (amount <= 0) {
       alert("לפחות 1");
       role.target.checked = false;
       return;
     }
+
     setEventStringsRoles(eventStringsRoles => [...eventStringsRoles, role.target.id + "-" + amount])
   }
 
@@ -62,7 +73,7 @@ const NewEvent = () => {
       await addDoc(collection(db, "events"), {
         name: user.displayName,
         event_name: title.current.value,
-        event_date: date.current.value,
+        event_date: Timestamp.fromDate(new Date(date.current.value)),
         type: type,
         description: description.current.value,
         is_active: true,

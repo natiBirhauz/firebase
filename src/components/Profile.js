@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db } from "./Firebase";
 import Header from './Header';
-// import AdminPer from './AdminPer';
 import '../components/layout/profile.css';
 
 function Profile() {
