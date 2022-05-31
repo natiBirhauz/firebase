@@ -13,6 +13,8 @@ function Register() {
     const gender = useRef("");
     const tel = useRef("");
     const [cats, setCats] = useState([]);
+    const [catTitles, setCatTitles] = useState([]);
+
     let userStringsRoles = [];
     const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ function Register() {
     const showCats = cats.map((subcat, indexCat) => {
         return (
             <div className='category' key={indexCat}>
-                <h3>קטגוריה {indexCat + 1}</h3>
+                <h3>{catTitles[indexCat]}</h3>
                 {subcat.map((role, indexRole) => {
                     return (
                         <div key={indexRole}>
@@ -45,6 +47,7 @@ function Register() {
             const data = await getDocs(collection(db, 'roles'));
             data.forEach((e) => {
                 const subarr = Object.values(e.data());
+                setCatTitles(catTitles => [...catTitles, e.id]);
                 setCats(cats => [...cats, subarr]);
             });
         }

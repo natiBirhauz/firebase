@@ -1,6 +1,6 @@
 import { db, auth } from "./Firebase"
 import { collection, addDoc, Timestamp, getDocs } from "firebase/firestore"
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, createElement } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import AdminPer from './AdminPer'
@@ -15,6 +15,7 @@ const NewEvent = () => {
   const [type, setType] = useState("");
   const [user] = useAuthState(auth);
   const [eventStringsRoles, setEventStringsRoles] = useState([]);
+  const [catTitles, setCatTitles] = useState([]);
 
   useEffect(() => {
     const getRoles = async () => {
@@ -22,6 +23,7 @@ const NewEvent = () => {
       const data = await getDocs(collection(db, 'roles'));
       data.forEach((e) => {
         const subarr = Object.values(e.data());
+        setCatTitles(catTitles => [...catTitles, e.id]);
         setCats(cats => [...cats, subarr]);
       });
     }
@@ -51,21 +53,33 @@ const NewEvent = () => {
     setEventStringsRoles(eventStringsRoles => [...eventStringsRoles, role.target.id + "-" + amount])
   }
 
-  const showCats = cats.map((subcat, indexCat) => {
-    return (
-      <div key={indexCat}>
-        <h3>קטגוריה {indexCat + 1}</h3>
-        {subcat.map((role, indexRole) => {
-          return (
-            <div key={indexRole}>
-              <input type="checkbox" value={indexRole} id={`${indexCat}-${indexRole}`} onChange={(e) => chooseAmount(e)} />
-              <label htmlFor={`${indexCat}-${indexRole}`}>{role}</label>
-            </div>
-          )
-        })}
-      </div>
-    )
-  })
+  const showCats = (index) => {
+    const div1 = document.createElement('div');
+    div1.key = index;
+    div1.id = 'titleCat';
+
+    const h3 = document.createElement('h3');
+    h3.innerHTML = (catTitles[index]);
+    div1.appendChild(h3);
+    document.getElementById('showCats').appendChild(div1);
+
+    cats[index].map((role, indexRole) => {
+      const div = document.createElement('div', { key: indexRole });
+      const input = document.createElement('input');
+      input.setAttribute('type', 'checkbox');
+      input.setAttribute('id', (index + '-' + indexRole));
+      input.onchange = (e) => chooseAmount(e);
+      input.value = indexRole;
+
+      const label = document.createElement('label');
+      label.setAttribute('htmlFor', index + '-' + indexRole)
+      label.textContent = role;
+      div.appendChild(input)
+      div.appendChild(label)
+
+      document.getElementById('titleCat').appendChild(div);
+    });
+  }
 
   const addEvent = async (e) => {
     e.preventDefault()
@@ -106,8 +120,18 @@ const NewEvent = () => {
               </select>
             </p>
 
-            <p><label>פירוט: </label><textarea ref={description} rows="5" cols="30" /></p>
-            {showCats}
+            <p><label htmlFor="desc">פירוט: </label><textarea ref={description} rows="5" cols="30" id="desc" /></p>
+            <p><select id="showCat" onChange={(e) => showCats(e.target.value)}>
+              <option defaultValue hidden>בחר קטגוריה</option>
+              {catTitles.map((title, index) => {
+                return (
+                  <option value={index} key={index}>{title}</option>
+                )
+              })}
+            </select></p>
+
+            <p id="showCats"></p>
+
             <p><button className="btn--accent" type="submit">הוסף אירוע</button></p>
           </form>
         </div>
