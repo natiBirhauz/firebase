@@ -30,8 +30,8 @@ const Routing = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/" render={() => user.currentUser ? <Navigate to={"/login"} /> : <Navigate to={path} />} />
+                {/* <Route path="/" element={<Login />} />
+                <Route path="/" render={() => user.currentUser ? <Navigate to={"/login"} /> : <Navigate to={path} />} /> */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/menu" element={<Menu />} />
