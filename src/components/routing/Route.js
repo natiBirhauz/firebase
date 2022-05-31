@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom"
 import Login from "../Login";
 import AdminDashboard from "../AdminDashboard";
 import Menu from "../Menu"
@@ -9,15 +9,29 @@ import Events from "../Events";
 import Register from "../Register";
 import Reset from "../Reset";
 import UserDashboard from "../UserDashboard";
-
+import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
 // import NewDelivery from "../NewDelivery"
 // import UserDashboard from "../UserDashboard";
 
+
+
 const Routing = () => {
+    const pathname = window.location.pathname;
+    const [path, setPath] = useState(pathname);
+    const user = getAuth();
+
+    useEffect(() => {
+        console.log(path);
+        path === "/login" && setPath("/");
+        path !== "/" && path !== "/dashboard" && setPath("/");
+    }, [user]);
+
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/" render={() => user.currentUser ? <Navigate to={"/login"} /> : <Navigate to={path} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/menu" element={<Menu />} />
