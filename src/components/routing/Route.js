@@ -22,16 +22,15 @@ const Routing = () => {
     const user = getAuth();
 
     useEffect(() => {
-        console.log(path);
         path === "/login" && setPath("/");
         path !== "/" && path !== "/dashboard" && setPath("/");
-    }, [user]);
+    }, [user.currentUser]);
 
     return (
         <Router>
             <Routes>
-                {/* <Route path="/" element={<Login />} />
-                <Route path="/" render={() => user.currentUser ? <Navigate to={"/login"} /> : <Navigate to={path} />} /> */}
+                {/* <Route path="/" element={<Login />} />*/}
+                <Route path="/" render={() => !user.currentUser ? <Navigate to={"/login"} /> : <Navigate to={path} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/menu" element={<Menu />} />
