@@ -111,7 +111,8 @@ const NewEvent = () => {
         <div className="box box--sub col">
           <form onSubmit={addEvent}>
             <p><label>כותרת האירוע: </label><input ref={title} type="text" name="title" required /></p>
-            <p><label>תאריך: </label><input ref={date} type="date" required /></p>
+            <p><label>תאריך: </label><input ref={date} type="date" placeholder="dd-mm-yyyy" value=""
+        min="1997-01-01" max="2050-12-31" required /></p>
             <p>
               <label>סוג אירוע: </label>
               <select onChange={(e) => setType(e.target.value)} required>
