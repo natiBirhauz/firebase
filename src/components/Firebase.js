@@ -23,7 +23,7 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 
-const registerWithEmailAndPassword = async (name, email, password, gender, tel, userRoles) => {
+const registerWithEmailAndPassword = async (name, ssn, email, password, gender, tel, city, userRoles) => {
   const adminUser = auth.currentUser;
 
   try {
@@ -38,9 +38,10 @@ const registerWithEmailAndPassword = async (name, email, password, gender, tel, 
         uid: res.user.uid,
         name,
         email,
-        password,
+        ssn,
         gender,
         tel,
+        city,
         isAdmin: false,
         isActive: true,
         roles: userRoles,

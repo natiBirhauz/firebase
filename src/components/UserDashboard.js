@@ -1,15 +1,24 @@
 import Header from "./Header"
 import "./layout/dashboard.css";
 import "./layout/notifications.css";
+import CloseEvents from './CloseEvents';
 
 function UserDashboard() {
 
     return (
         <div>
             <Header />
-            <br />
-            <div className="box container main">
-                <h1 className="main__title title container">דשבורד</h1>
+            <div className="container row">
+                <div className="container box box--sub">
+                    <h2>אירועים קרובים בשבילך</h2>
+                    <CloseEvents />
+                </div>
+                <div className="container box box--sub">
+                    <h2>אירועים שנרשמת אליהם</h2>
+                    <div className="seperator"></div>
+                    <div>אין אירועים</div>
+                    <div className="seperator"></div>
+                </div>
             </div>
             <div className="container row">
                 <div className="container box box--sub">
@@ -47,8 +56,6 @@ function UserDashboard() {
             <section className="status-tables">
                 <div className="container box box--sub">
                     <h2 className="section__title container">מערכת</h2>
-
-
                     <div className="status-tables--group status-table__notifications">
                         <h3 className="container">עדכונים</h3>
                         <div className="notifications-menu__item">

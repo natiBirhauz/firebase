@@ -61,7 +61,7 @@ const NewEvent = () => {
     const h3 = document.createElement('h3');
     h3.innerHTML = (catTitles[index]);
     div1.appendChild(h3);
-    document.getElementById('showCats').appendChild(div1);
+    document.getElementById('showCats').replaceChildren(div1);
 
     cats[index].map((role, indexRole) => {
       const div = document.createElement('div', { key: indexRole });

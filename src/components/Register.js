@@ -1,17 +1,18 @@
 import { React, useRef, useState, useEffect } from "react";
-import { registerWithEmailAndPassword } from "./Firebase";
+import { db, registerWithEmailAndPassword } from "./Firebase";
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "./Firebase";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import AdminPer from "./AdminPer";
 import "./layout/roles.css"
-import { useNavigate } from "react-router-dom";
 
 function Register() {
     const email = useRef("");
     const fullName = useRef("");
     const gender = useRef("");
     const tel = useRef("");
+    const city = useRef("");
+    const ssn = useRef("");
     const [cats, setCats] = useState([]);
     const [catTitles, setCatTitles] = useState([]);
 
@@ -54,15 +55,30 @@ function Register() {
         getRoles();
     }, []);
 
+    function is_israeli_id_number(id) {
+        id = String(id).trim();
+        if (id.length > 9 || isNaN(id)) return false;
+        id = id.length < 9 ? ("00000000" + id).slice(-9) : id;
+        return Array.from(id, Number).reduce((counter, digit, i) => {
+            const step = digit * ((i % 2) + 1);
+            return counter + (step > 9 ? step - 9 : step);
+        }) % 10 === 0;
+    }
 
     const register = (event) => {
         event.preventDefault();
         const err = document.getElementById('err');
+        if (is_israeli_id_number(ssn.current.value) === false) {
+            err.style.color = 'red';
+            err.innerText = 'מספר תעודת זהות אינו תקין, נסה/י שנית';
+            return;
+        }
+
         const password = (Math.random().toString(15).substring(2, 20));
         let errOccured = false;
 
         try {
-            registerWithEmailAndPassword(fullName.current.value, email.current.value, password, gender.current.value, tel.current.value, userStringsRoles);
+            registerWithEmailAndPassword(fullName.current.value, ssn.current.value, email.current.value, password, gender.current.value, tel.current.value, city.current.value, userStringsRoles);
         } catch (e) {
             errOccured = true;
             err.style.color = 'red';
@@ -90,6 +106,7 @@ function Register() {
                 <p>סיסמה אקראית תישלח לכתובת המייל של המתנדב בסוף תהליך הרישום</p>
                 <form className="login__form" onSubmit={register}>
                     <input ref={fullName} className="form__input" type="text" placeholder="שם מלא" required />
+                    <input ref={ssn} className="form__input" type="number" placeholder="תעודת זהות" required />
                     <select ref={gender} className="form__input" defaultValue={"default"}>
                         <option value="default" disabled>בחר מגדר</option>
                         <option value="זכר">זכר</option>
@@ -98,6 +115,7 @@ function Register() {
                     </select>
                     <input ref={email} className="form__input" type="email" placeholder="כתובת אימייל" required />
                     <input ref={tel} className="form__input" type="tel" placeholder="מספר פלאפון" required />
+                    <input ref={city} className="form__input" type="text" placeholder="עיר" required />
 
                     {/* Roles */}
                     <div id='rolesList' className='container'>
