@@ -93,6 +93,7 @@ const NewEvent = () => {
         is_active: true,
         roles: eventStringsRoles,
         created: Timestamp.now()
+        alert("אירוע נוצר בהצלחה!");
       })
     } catch (err) {
       alert(err)
