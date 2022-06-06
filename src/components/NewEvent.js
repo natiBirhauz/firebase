@@ -112,6 +112,8 @@ const NewEvent = () => {
           <form onSubmit={addEvent}>
             <p><label>כותרת האירוע: </label><input ref={title} type="text" name="title" required /></p>
             <p><label>תאריך: </label><input ref={date} type="date" required /></p>
+            <p><label>תאריך: </label>type="number" id="volenteers_num" name="כמות משתתפים" /></p>
+
             <p>
               <label>סוג אירוע: </label>
               <select onChange={(e) => setType(e.target.value)} required>
