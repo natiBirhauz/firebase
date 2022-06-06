@@ -34,6 +34,11 @@ const NewEvent = () => {
     let amount;
     if (role.target.checked === true)
       amount = prompt("נבחר תפקיד " + cats[role.target.id.charAt(0)][role.target.value] + ". הכנס כמות נדרשת:");
+    while (!Number.isInteger(amount)
+        {
+           prompt("לא הוכנס מספר")
+           amount = prompt("נבחר תפקיד " + cats[role.target.id.charAt(0)][role.target.value] + ". הכנס כמות נדרשת:");
+        }
     else {
       setEventStringsRoles(eventStringsRoles.filter((roleInList) => {
         const arr = roleInList.split('-');
